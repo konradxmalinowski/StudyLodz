@@ -2,23 +2,6 @@
 
 Welcome to **StudyLodz**, a mobile application designed for every student in Łódź! 🇵🇱 This app aims to be your main source of information and guidance for navigating student life, from academic matters to social activities.
 
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/61866579-0af6-4b43-b5b3-f150a6a4eb31" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/6fc452a8-f578-4681-9212-0076ef793a8f" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/1a4db3d3-70dd-4d96-b88c-87671e1b04a7" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/d0915829-90a0-4cab-9d0a-882514d3a6f9" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/ff00f488-248a-4704-b5f2-8910d9914a8b" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/fae81d0a-b05c-454e-92b2-e804bbedbee0" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/e098ad55-b80e-49b7-ae40-4f048eeae133" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/9869ee0a-9fc2-45af-b4be-10bde3a4d132" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/da559243-1566-4faa-a822-2fdd0ea9c3c2" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/b457e689-0eaa-42ed-b4de-6414eda20eab" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/30bcdc74-b1a8-4f3d-9c7c-803028cfafe6" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/935540c4-4b59-493c-898b-b4bb104e77d9" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/e136ec1c-fd7b-4596-a52f-122ed827d110" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/1af59c1a-183c-4145-8d0f-5c5f07d7de30" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/0cfc4ee4-8815-4972-a179-807a4ae45a1f" />
-<img height="500" alt="image" src="https://github.com/user-attachments/assets/d47190db-87b1-40b3-a892-e6c97520c26e" />
-
 ## 📜 Table of Contents
 
 * [About the Project](#-about-the-project)
