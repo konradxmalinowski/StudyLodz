@@ -258,6 +258,42 @@ Poniżej znajduje się pełna lista problemów znalezionych w projekcie, posorto
 
 ---
 
+### `hooks/use-color-scheme.web.ts` ✅
+
+- **[KRYTYCZNY – NAPRAWIONO]**: Brak eksportu `loadOverride`. `app/_layout.tsx` importuje tę funkcję z `@/hooks/use-color-scheme` – na web bundler wskazuje na `.web.ts`, gdzie `loadOverride` był `undefined`. Wywołanie `loadOverride()` rzucało `TypeError: loadOverride is not a function`, co było łapane przez `catch` i logowane przez `console.warn` w produkcji. Dodano no-op eksport.
+
+---
+
+### `app/_layout.tsx` ✅
+
+- **[OSTRZEŻENIE – NAPRAWIONO]**: `console.warn(e)` w bloku `catch` produkcyjnego kodu. Zastąpiono pustym catch – błędy `loadOverride` są nieodwracalne i nie wymagają logowania.
+
+---
+
+### `components/ui/icon-symbol.tsx` ✅
+
+- **[BŁĄD TYPÓW – NAPRAWIONO]**: `IconSymbolProps` był używany w `(tabs)/_layout.tsx` (`import { IconSymbol, IconSymbolProps }`) ale nie był eksportowany z pliku. TypeScript w strict mode zgłaszał błąd. Dodano eksport typu.
+
+---
+
+### `components/animated-card.tsx` ✅
+
+- **[OSTRZEŻENIE – NAPRAWIONO]**: `onPressIn` i `onPressOut` były zawsze rejestrowane jako arrow functions, nawet gdy `onPress` było `undefined`. Powodowało to, że `Pressable` zawsze rejestrował się jako responder w systemie dotykowym RN, potencjalnie blokując dotyki dzieci. Naprawiono: handlery są ustawiane tylko gdy `onPress` jest zdefiniowane.
+
+---
+
+### `components/read-more.tsx` ✅
+
+- **[UX BUG – NAPRAWIONO]**: Przycisk "Czytaj więcej" był zawsze widoczny, nawet gdy tekst mieścił się w `numberOfLines` linii. Zaimplementowano pomiar dwóch warstw: ukryty `ThemedText` bez `numberOfLines` zlicza faktyczną liczbę linii przez `onTextLayout`; przycisk pokazuje się tylko gdy tekst faktycznie jest skrócony.
+
+---
+
+### `app/(tabs)/lodz.tsx` ✅
+
+- **[JAKOŚĆ KODU – NAPRAWIONO]**: `React.useEffect` zastąpiony named importem `useEffect` (spójność z resztą projektu).
+
+---
+
 ### `app.json` ⚠️
 
 - **[OSTRZEŻENIE]**: Brak konfiguracji Google Maps API key dla Android. `react-native-maps` na produkcyjnym buildzie Androida wymaga `google-services.json` oraz `googleServicesFile` w `app.json`. Bez tego mapa nie załaduje się na produkcji (Android).
@@ -270,18 +306,19 @@ Poniżej znajduje się pełna lista problemów znalezionych w projekcie, posorto
 
 ---
 
-### Podsumowanie
+### Podsumowanie (3 rundy audytu)
 
 | Kategoria | Znaleziono | Naprawiono |
 |---|---|---|
-| Krytyczne błędy (crash / niewidoczny UI) | 3 | 3 ✅ |
-| Błędy funkcjonalne | 3 | 3 ✅ |
-| Ostrzeżenia (potencjalne problemy) | 12 | 10 ✅ |
-| Jakość kodu / dead code | 9 | 7 ✅ |
+| Krytyczne błędy (crash / niewidoczny UI) | 4 | 4 ✅ |
+| Błędy TypeScript / kontraktów typów | 2 | 2 ✅ |
+| Błędy funkcjonalne / UX | 4 | 4 ✅ |
+| Ostrzeżenia (potencjalne problemy) | 14 | 13 ✅ |
+| Jakość kodu / dead code | 11 | 9 ✅ |
 | Wymagające ręcznej akcji | 2 | — ⚠️ |
-| **Łącznie** | **29** | **23 naprawiono** |
+| **Łącznie** | **37** | **32 naprawiono** |
 
-#### Pozostałe do zrobienia ręcznie:
+#### Pozostałe do zrobienia ręcznie (wymagają danych zewnętrznych):
 1. **`app.json`** – skonfigurować Google Maps API key dla Android produkcji
 2. **`eas.json`** – uzupełnić `submit.production` przed submisją do sklepów
 3. **`components/hello-wave.tsx`** – zdecydować o ikonie lub nazwie komponentu

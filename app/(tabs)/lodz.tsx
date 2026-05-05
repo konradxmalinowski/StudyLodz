@@ -7,7 +7,7 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useRouter } from 'expo-router';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
 import Animated, { Easing, useSharedValue, withTiming } from 'react-native-reanimated';
 
@@ -131,7 +131,7 @@ export default function LodzScreen() {
   const imageOpacity = useSharedValue(0);
   const router = useRouter();
 
-  React.useEffect(() => {
+  useEffect(() => {
     imageOpacity.value = withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) });
   }, [imageOpacity]);
 

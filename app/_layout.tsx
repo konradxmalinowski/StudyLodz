@@ -25,8 +25,8 @@ export default function RootLayout() {
       try {
         // Pre-load the color scheme
         await loadOverride();
-      } catch (e) {
-        console.warn(e);
+      } catch {
+        // loadOverride is best-effort; app renders regardless
       } finally {
         // Tell the application to render
         setAppIsReady(true);

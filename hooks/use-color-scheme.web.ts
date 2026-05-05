@@ -14,6 +14,10 @@ try {
   _override = null;
 }
 
+export async function loadOverride(): Promise<void> {
+  // On web, override is loaded synchronously at module init above
+}
+
 export function setColorSchemeOverride(value: ColorSchemeName | 'system' | null) {
   _override = value === 'system' ? null : value;
   try {

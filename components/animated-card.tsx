@@ -42,16 +42,9 @@ export function AnimatedCard({
   return (
     <Pressable
       onPress={onPress}
-      onPressIn={() => {
-        if (onPress) {
-          scale.value = withSpring(0.98);
-        }
-      }}
-      onPressOut={() => {
-        if (onPress) {
-          scale.value = withSpring(1);
-        }
-      }}>
+      onPressIn={onPress ? () => { scale.value = withSpring(0.98); } : undefined}
+      onPressOut={onPress ? () => { scale.value = withSpring(1); } : undefined}
+    >
       <AnimatedThemedView style={[styles.animatedCardContainer, style, animatedStyle]}>
         {children}
       </AnimatedThemedView>
