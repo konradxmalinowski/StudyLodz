@@ -91,15 +91,17 @@ To update or verify: search each address on https://www.openstreetmap.org and re
 
 ---
 
-## discount partners — `app/(tabs)/discounts.tsx`
+## discount partners — `constants/discounts.ts` + `app/(tabs)/discounts.tsx`
 
-**Current state:** 6 generic category labels (Transport, Kultura, Sport, Gastronomia, Edukacja, Zdrowie) + a link to kartalodzianina.pl. No actual partner list.
+**Current state (after fix):** 17 manually curated partners across 6 categories. Screen shows a filterable list — tap a category to narrow results; each entry shows name, discount terms, address, and an external link.
 
-**Should be scraped from:** https://kartalodzianina.pl/mlodzi — partner list (~200+ entries with name, address, discount description).
+**Problem:** The 17 entries are a starting point. kartalodzianina.pl lists ~200+ partners.
 
-**Scraper type:** Static HTML / possible JSON API. The site uses a filterable list — inspect Network tab to check for an API endpoint before writing an HTML scraper.
+**Should be scraped from:** https://kartalodzianina.pl/mlodzi — full partner list with name, address, discount description, and category.
 
-**Data shape needed:**
+**Scraper type:** Static HTML / possible JSON API. Inspect the Network tab to check for an API endpoint before writing an HTML scraper.
+
+**Data shape (already typed in `constants/discounts.ts`):**
 ```ts
 type DiscountPartner = {
   name: string;
@@ -109,6 +111,8 @@ type DiscountPartner = {
   url?: string;
 };
 ```
+
+**To expand:** Replace the manual list in `DISCOUNT_PARTNERS` with output from the scraper. Category names must match the `DISCOUNT_CATEGORIES` array exactly.
 
 ---
 
