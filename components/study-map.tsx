@@ -1,8 +1,14 @@
+import { Colors } from '@/constants/theme';
+import { useColorScheme } from '@/hooks/use-color-scheme';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
+import { useRouter } from 'expo-router';
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import { WebView } from 'react-native-webview';
 
-const MAP_HTML = `<!DOCTYPE html>
+import { ThemedText } from './themed-text';
+
+const PREVIEW_HTML = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8"/>
@@ -18,33 +24,48 @@ const MAP_HTML = `<!DOCTYPE html>
 <body>
 <div id="map"></div>
 <script>
-  var map=L.map('map',{zoomControl:false}).setView([51.761,19.465],13);
+  var map=L.map('map',{zoomControl:false,dragging:false,touchZoom:false,scrollWheelZoom:false,doubleClickZoom:false,boxZoom:false,keyboard:false}).setView([51.761,19.465],13);
   L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
     attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
     subdomains:'abcd',
     maxZoom:19
   }).addTo(map);
   function mk(){return L.divIcon({html:'<div class="pin">🎓</div>',className:'',iconSize:[32,32],iconAnchor:[16,16]})}
-  L.marker([51.749,19.455],{icon:mk()}).addTo(map).bindPopup('Politechnika Łódzka');
-  L.marker([51.773,19.468],{icon:mk()}).addTo(map).bindPopup('Uniwersytet Łódzki');
-  L.marker([51.762,19.453],{icon:mk()}).addTo(map).bindPopup('Uniwersytet Medyczny');
-  L.marker([51.775,19.472],{icon:mk()}).addTo(map).bindPopup('Akademia Sztuk Pięknych');
-  L.marker([51.769,19.464],{icon:mk()}).addTo(map).bindPopup('Akademia Muzyczna');
-  L.marker([51.758,19.480],{icon:mk()}).addTo(map).bindPopup('Szkoła Filmowa');
+  L.marker([51.749,19.455],{icon:mk()}).addTo(map);
+  L.marker([51.773,19.468],{icon:mk()}).addTo(map);
+  L.marker([51.762,19.453],{icon:mk()}).addTo(map);
+  L.marker([51.775,19.472],{icon:mk()}).addTo(map);
+  L.marker([51.769,19.464],{icon:mk()}).addTo(map);
+  L.marker([51.758,19.480],{icon:mk()}).addTo(map);
 </script>
 </body>
 </html>`;
 
 export function StudyMap() {
+  const router = useRouter();
+  const colorScheme = useColorScheme();
+  const tintColor = Colors[colorScheme ?? 'light'].tint;
+
   return (
     <View style={styles.container}>
-      <WebView
-        source={{ html: MAP_HTML }}
-        style={styles.map}
-        scrollEnabled={false}
-        showsVerticalScrollIndicator={false}
-        showsHorizontalScrollIndicator={false}
-      />
+      <View pointerEvents="none" style={StyleSheet.absoluteFill}>
+        <WebView
+          source={{ html: PREVIEW_HTML }}
+          style={styles.map}
+          scrollEnabled={false}
+          showsVerticalScrollIndicator={false}
+          showsHorizontalScrollIndicator={false}
+        />
+      </View>
+      <Pressable
+        style={styles.overlay}
+        onPress={() => router.push({ pathname: '/modal', params: { map: 'campuses' } })}
+      >
+        <View style={[styles.openButton, { backgroundColor: tintColor }]}>
+          <MaterialCommunityIcons name="map-search" size={18} color="#fff" />
+          <ThemedText style={styles.openButtonText}>Otwórz mapę</ThemedText>
+        </View>
+      </Pressable>
     </View>
   );
 }
@@ -58,5 +79,29 @@ const styles = StyleSheet.create({
   },
   map: {
     flex: 1,
+  },
+  overlay: {
+    ...StyleSheet.absoluteFillObject,
+    justifyContent: 'flex-end',
+    alignItems: 'flex-end',
+    padding: 12,
+  },
+  openButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingVertical: 8,
+    paddingHorizontal: 14,
+    borderRadius: 20,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    elevation: 4,
+  },
+  openButtonText: {
+    color: '#fff',
+    fontWeight: '600',
+    fontSize: 14,
   },
 });
