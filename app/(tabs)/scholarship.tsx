@@ -15,24 +15,28 @@ const SCHOLARSHIPS = [
     description: 'Dla studentów z wysoką średnią ocen, osiągnięciami naukowymi, artystycznymi lub sportowymi. Zwykle przyznawane na rok akademicki.',
     icon: 'school-outline',
     url: 'https://www.gov.pl/web/edukacja-i-nauka/stypendium-rektora',
+    amount: '600–1200 PLN/mies.',
   },
   {
     title: 'Stypendium socjalne',
     description: 'Dla studentów w trudnej sytuacji materialnej. Wysokość zależy od dochodu na osobę w rodzinie.',
     icon: 'cash-multiple',
     url: 'https://www.gov.pl/web/edukacja-i-nauka/stypendium-socjalne',
+    amount: '400–1200 PLN/mies.',
   },
   {
     title: 'Stypendium dla osób z niepełnosprawnościami',
     description: 'Specjalne wsparcie dla studentów z orzeczeniem o niepełnosprawności.',
     icon: 'wheelchair-accessibility',
     url: 'https://www.gov.pl/web/edukacja-i-nauka/stypendium-dla-osob-z-niepelnosprawnosciami',
+    amount: '200–500 PLN/mies.',
   },
-    {
+  {
     title: 'Stypendium ministra',
     description: 'Za wybitne osiągnięcia naukowe, artystyczne lub sportowe. Przyznawane przez Ministra Edukacji i Nauki.',
     icon: 'trophy-award',
     url: 'https://www.gov.pl/web/edukacja-i-nauka/stypendium-ministra-za-wybitne-osiagniecia',
+    amount: '~4000 PLN jednorazowo',
   },
 ];
 
@@ -88,6 +92,9 @@ export default function ScholarshipScreen() {
                 <View style={styles.cardContent}>
                   <ThemedText type="defaultSemiBold">{item.title}</ThemedText>
                   <ThemedText style={styles.cardDescription}>{item.description}</ThemedText>
+                  {item.amount && (
+                    <ThemedText style={[styles.amount, { color: tintColor }]}>{item.amount}</ThemedText>
+                  )}
                 </View>
                 {item.url && <MaterialCommunityIcons name="chevron-right" size={24} color={iconColor} />}
               </LinearGradient>
@@ -154,5 +161,10 @@ const styles = StyleSheet.create({
     opacity: 0.7,
     fontSize: 14,
     lineHeight: 18,
+  },
+  amount: {
+    fontSize: 13,
+    fontWeight: '600',
+    marginTop: 2,
   },
 });
