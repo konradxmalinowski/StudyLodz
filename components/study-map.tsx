@@ -1,82 +1,57 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import MapView, { Marker } from 'react-native-maps';
-import Animated, { useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
+import { WebView } from 'react-native-webview';
 
-import { ThemedView } from './themed-view';
-import { IconSymbol } from './ui/icon-symbol';
-
-const AnimatedThemedView = Animated.createAnimatedComponent(ThemedView);
-
-function AnimatedMapMarker({
-  delay,
-  coordinate,
-  title,
-}: {
-  delay: number;
-  coordinate: { latitude: number; longitude: number };
-  title: string;
-}) {
-  const scale = useSharedValue(0);
-  const opacity = useSharedValue(0);
-
-  useEffect(() => {
-    scale.value = withDelay(delay, withTiming(1));
-    opacity.value = withDelay(delay, withTiming(1));
-  }, [scale, opacity, delay]);
-
-  const animatedStyle = useAnimatedStyle(() => ({
-    transform: [{ scale: scale.value }],
-    opacity: opacity.value,
-  }));
-
-  return (
-    <Marker coordinate={coordinate} title={title}>
-      <AnimatedThemedView style={[styles.marker, animatedStyle]} lightColor="#fff" darkColor="#1D3D47">
-        <IconSymbol name="book.fill" size={20} color="#0a7ea4" />
-      </AnimatedThemedView>
-    </Marker>
-  );
-}
+const MAP_HTML = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <style>
+    body{margin:0;padding:0}
+    #map{width:100%;height:100vh}
+    .pin{width:32px;height:32px;background:#0a7ea4;border-radius:50%;display:flex;align-items:center;justify-content:center;border:2px solid #fff;box-shadow:0 2px 4px rgba(0,0,0,.3);font-size:16px;text-align:center;line-height:32px}
+  </style>
+</head>
+<body>
+<div id="map"></div>
+<script>
+  var map=L.map('map',{zoomControl:false}).setView([51.761,19.465],13);
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+    maxZoom:19
+  }).addTo(map);
+  function mk(){return L.divIcon({html:'<div class="pin">🎓</div>',className:'',iconSize:[32,32],iconAnchor:[16,16]})}
+  L.marker([51.749,19.455],{icon:mk()}).addTo(map).bindPopup('Politechnika Łódzka');
+  L.marker([51.773,19.475],{icon:mk()}).addTo(map).bindPopup('Uniwersytet Łódzki');
+</script>
+</body>
+</html>`;
 
 export function StudyMap() {
   return (
-    <View style={styles.mapContainer}>
-      <MapView
+    <View style={styles.container}>
+      <WebView
+        source={{ html: MAP_HTML, baseUrl: 'https://www.openstreetmap.org' }}
         style={styles.map}
-        initialRegion={{
-          latitude: 51.76,
-          longitude: 19.46,
-          latitudeDelta: 0.06,
-          longitudeDelta: 0.06,
-        }}>
-        <AnimatedMapMarker coordinate={{ latitude: 51.749, longitude: 19.455 }} title="Politechnika Łódzka" delay={100} />
-        <AnimatedMapMarker coordinate={{ latitude: 51.773, longitude: 19.475 }} title="Uniwersytet Łódzki" delay={200} />
-      </MapView>
+        scrollEnabled={false}
+        showsVerticalScrollIndicator={false}
+        showsHorizontalScrollIndicator={false}
+      />
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  mapContainer: {
+  container: {
     height: 200,
     borderRadius: 12,
     overflow: 'hidden',
     marginTop: 8,
   },
   map: {
-    ...StyleSheet.absoluteFillObject,
-  },
-  marker: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderColor: 'rgba(0,0,0,0.1)',
-    borderWidth: 1,
-    shadowColor: '#000',
-    shadowOpacity: 0.1,
-    shadowRadius: 3,
+    flex: 1,
   },
 });

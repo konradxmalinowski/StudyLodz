@@ -4,7 +4,8 @@ import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import React from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View, Linking, Pressable } from 'react-native';
+import { ScrollView, StyleSheet, View, Linking, Pressable } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import { LinearGradient } from 'expo-linear-gradient';
 

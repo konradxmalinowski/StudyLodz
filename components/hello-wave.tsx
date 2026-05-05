@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import Animated, { useAnimatedStyle, useSharedValue, withRepeat, withTiming } from 'react-native-reanimated';
 import { ThemedIcon } from './ui/themed-icon';
 
-const wrenchIcon = `<svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#e3e3e3"><path d="m434-498 276-275q9-9 21-9t21 9q9 9 9 21t-9 21L476-455l-42-43Zm104 104 247-247q9.07-9 21.53-9 12.47 0 21.47 8.84 9 8.84 9 21T828-599L580-351l-42-43ZM195-199q-91-91-91.5-218T194-635l122-122 42 42q12 12 19.5 28t8.5 30l163-164q9.07-9 21.53-9 12.47 0 21.47 9.05 9 9.06 9 21.5 0 12.45-9 21.45L389-575l-65 65 26 26q42 42 40.5 100.5T347-283l-7 7-42-43 7-7q25-25 25.5-58.5T307-442l-47-47q-9-9.07-9-21.53 0-12.47 9-21.47l56-55q17-17 17-42.5T316-672l-80 80q-73 73-72.5 175T237-242q74 74 177 75.5T590-238l241-241q9.07-9 21.53-9 12.47 0 21.47 8.84 9 8.84 9 21T874-437L633-196q-91 91-219 89.5T195-199Zm217-217ZM689-40l1-60q71 0 120.5-49.5T860-270l60-1q0 95.85-67.57 163.43Q784.85-40 689-40ZM40-689q0-95.85 67.57-163.43Q175.15-920 271-920l-1 60q-71 0-120.5 49.5T100-690l-60 1Z"/></svg>`;
+const wavingHandIcon = `<svg xmlns="http://www.w3.org/2000/svg" height="48px" viewBox="0 -960 960 960" width="48px" fill="#e3e3e3"><path d="M430-120q-92 0-157-64.5T208-341v-219q0-18.75 12.63-31.37Q233.25-604 252-604q18.75 0 31.38 12.63Q296-578.75 296-560v129h44v-213q0-18.75 12.63-31.37Q365.25-688 384-688q18.75 0 31.38 12.63Q428-662.75 428-644v169h44v-189q0-18.75 12.63-31.37Q497.25-708 516-708q18.75 0 31.38 12.63Q560-682.75 560-664v145h44v-109q0-18.75 12.63-31.37Q629.25-672 648-672q18.75 0 31.38 12.63Q692-646.75 692-628v287q0 92-64.5 156.5T470-120h-40ZM252-340q0 73.71 51.15 124.85Q354.29-164 428-164h2q73.71 0 124.85-51.15Q606-266.29 606-340v-44H252v44Zm0-88h354v-200h-44v65H476v-145H384v189H296v-129H252v220Zm0 0v-220 220Z"/></svg>`;
 
 export function HelloWave() {
   const progress = useSharedValue(0);
@@ -20,7 +20,7 @@ export function HelloWave() {
 
   return (
     <Animated.View style={[{ marginTop: -6 }, rStyle]}>
-      <ThemedIcon xml={wrenchIcon} size={28} />
+      <ThemedIcon xml={wavingHandIcon} size={28} />
     </Animated.View>
   );
 }

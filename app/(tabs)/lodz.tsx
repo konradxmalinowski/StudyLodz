@@ -8,7 +8,8 @@ import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
-import { Image, Pressable, SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
+import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import Animated, { Easing, useSharedValue, withTiming } from 'react-native-reanimated';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);

@@ -8,12 +8,9 @@ import { University, UNIVERSITIES } from '@/constants/universities';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
-import { SafeAreaView, ScrollView, StyleSheet, View, LayoutAnimation, UIManager, Platform, Pressable, TextInput } from 'react-native';
+import { ScrollView, StyleSheet, View, LayoutAnimation, Pressable, TextInput } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
-
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 
 export default function StudyScreen() {
   const colorScheme = useColorScheme();

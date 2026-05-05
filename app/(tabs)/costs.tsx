@@ -7,12 +7,9 @@ import Slider from '@react-native-community/slider';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, LayoutAnimation, Platform, Pressable, SafeAreaView, ScrollView, StyleSheet, UIManager, View } from 'react-native';
+import { Dimensions, LayoutAnimation, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 import { PieChart } from 'react-native-chart-kit';
-
-if (Platform.OS === 'android' && UIManager.setLayoutAnimationEnabledExperimental) {
-  UIManager.setLayoutAnimationEnabledExperimental(true);
-}
 
 const CATEGORIES = [
   {
@@ -45,7 +42,7 @@ const CATEGORIES = [
     step: 10,
     initialValue: 70,
     description: 'Bilet miesięczny lub jednorazowe',
-    icon: 'bus-outline',
+    icon: 'bus',
     color: '#FFCE56',
   },
   {
