@@ -131,7 +131,7 @@ const SECTIONS = [
 export default function LodzScreen() {
   const colorScheme = useColorScheme();
   const tintColor = Colors[colorScheme ?? 'light'].tint;
-  const { isTablet, padding, col2Width } = useResponsive();
+  const { isTablet, padding } = useResponsive();
   const imageOpacity = useSharedValue(0);
   const router = useRouter();
 
@@ -187,7 +187,7 @@ export default function LodzScreen() {
               {BENEFITS.map((card) => (
                 <ThemedView
                   key={card.title}
-                  style={[styles.card, isTablet && { width: col2Width, flex: 0 }]}
+                  style={[styles.card, isTablet && styles.cardTablet]}
                   lightColor={card.lightColor}
                   darkColor={card.darkColor}>
                   <View style={styles.cardHeader}>
@@ -208,7 +208,7 @@ export default function LodzScreen() {
                 </ThemedText>
                 <View style={styles.grid}>
                 {TIDBITS.map((tidbit) => (
-                    <ThemedView key={tidbit.title} style={[styles.card, isTablet && { width: col2Width, flex: 0 }]} lightColor="#f9f9f9" darkColor="#1c1c1e">
+                    <ThemedView key={tidbit.title} style={[styles.card, isTablet && styles.cardTablet]} lightColor="#f9f9f9" darkColor="#1c1c1e">
                     <View style={styles.cardHeader}>
                         <IconSymbol name={tidbit.icon as any} size={24} color={tintColor} />
                         <ThemedText type="defaultSemiBold" style={{ flexShrink: 1 }}>{tidbit.title}</ThemedText>
@@ -242,7 +242,7 @@ export default function LodzScreen() {
             </ThemedText>
             <View style={styles.grid}>
               {NEIGHBORHOODS.map((neighborhood) => (
-                <ThemedView key={neighborhood.title} style={[styles.card, isTablet && { width: col2Width, flex: 0 }]} lightColor="#f9f9f9" darkColor="#1c1c1e">
+                <ThemedView key={neighborhood.title} style={[styles.card, isTablet && styles.cardTablet]} lightColor="#f9f9f9" darkColor="#1c1c1e">
                   <View style={styles.cardHeader}>
                     <IconSymbol name={neighborhood.icon as any} size={24} color={tintColor} />
                     <ThemedText type="defaultSemiBold" style={{ flexShrink: 1 }}>{neighborhood.title}</ThemedText>
@@ -313,7 +313,12 @@ const styles = StyleSheet.create({
       shadowRadius: 8,
       elevation: 5,
       flex: 1,
-      minWidth: 280,
+      minWidth: 260,
+    },
+    cardTablet: {
+      flexBasis: '48%',
+      flex: 0,
+      minWidth: 0,
     },
     cardHeader: {
       flexDirection: 'row',

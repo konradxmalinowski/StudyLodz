@@ -16,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function DiscountsScreen() {
   const colorScheme = useColorScheme();
   const tintColor = Colors[colorScheme ?? 'light'].tint;
-  const { isTablet, padding, col2Width } = useResponsive();
+  const { isTablet, padding } = useResponsive();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const openLink = (url: string) => {
@@ -105,7 +105,7 @@ export default function DiscountsScreen() {
               <Pressable
                 key={partner.name}
                 onPress={partner.url ? () => openLink(partner.url!) : undefined}
-                style={({ pressed }) => [styles.partnerRow, isTablet && { width: col2Width, borderBottomWidth: 0, borderWidth: StyleSheet.hairlineWidth, borderColor: '#ccc', borderRadius: 8, padding: 8 }, pressed && { opacity: 0.7 }]}
+                style={({ pressed }) => [styles.partnerRow, isTablet && styles.partnerRowTablet, pressed && { opacity: 0.7 }]}
               >
                 <View style={styles.partnerContent}>
                   <ThemedText type="defaultSemiBold">{partner.name}</ThemedText>
@@ -209,5 +209,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 8,
+  },
+  partnerRowTablet: {
+    flexBasis: '48%',
+    borderBottomWidth: 0,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 8,
   },
 });

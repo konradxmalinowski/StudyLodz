@@ -70,7 +70,7 @@ export default function ScholarshipScreen() {
   const tintColor = Colors[colorScheme ?? 'light'].tint;
   const iconColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
   const gradientColors: [string, string] = colorScheme === 'dark' ? ['#1c1c1e', '#2c2c2e'] : ['#f9f9f9', '#e9e9e9'];
-  const { isTablet, padding, col2Width } = useResponsive();
+  const { isTablet, padding } = useResponsive();
 
   const openLink = (url: string) => {
     Linking.openURL(url).catch(() => {});
@@ -90,7 +90,7 @@ export default function ScholarshipScreen() {
           <ThemedText type="subtitle" style={styles.sectionTitle}>Dostępne stypendia</ThemedText>
           <View style={isTablet ? styles.gridTablet : undefined}>
           {SCHOLARSHIPS.map((item) => (
-            <Pressable key={item.title} onPress={() => item.url && openLink(item.url)} style={isTablet && { width: col2Width }}>
+            <Pressable key={item.title} onPress={() => item.url && openLink(item.url)} style={isTablet && styles.gridItemTablet}>
               <LinearGradient colors={gradientColors} style={styles.card}>
                 <MaterialCommunityIcons name={item.icon as any} size={28} color={tintColor} />
                 <View style={styles.cardContent}>
@@ -132,6 +132,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 16,
+  },
+  gridItemTablet: {
+    flexBasis: '48%',
   },
   header: {
     gap: 8,

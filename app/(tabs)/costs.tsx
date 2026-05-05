@@ -70,7 +70,7 @@ export default function CostsScreen() {
   const tintColor = Colors[colorScheme ?? 'light'].tint;
   const iconColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
   const gradientColors: [string, string] = colorScheme === 'dark' ? ['#1c1c1e', '#2c2c2e'] : ['#f9f9f9', '#e9e9e9'];
-  const { isTablet, padding, screenWidth, col2Width } = useResponsive();
+  const { isTablet, padding, screenWidth } = useResponsive();
 
   const [costs, setCosts] = useState(initialCosts);
 
@@ -128,7 +128,7 @@ export default function CostsScreen() {
 
         <View style={isTablet ? [styles.categoriesGridTablet] : undefined}>
         {CATEGORIES.map((category) => (
-          <ThemedView key={category.key} style={[styles.categoryContainer, isTablet && { width: col2Width }]} lightColor="#f9f9f9" darkColor="#1c1c1e">
+          <ThemedView key={category.key} style={[styles.categoryContainer, isTablet && styles.categoryContainerTablet]} lightColor="#f9f9f9" darkColor="#1c1c1e">
             <View style={styles.categoryHeader}>
               <View style={styles.categoryTitle}>
                 <MaterialCommunityIcons name={category.icon as any} size={24} color={iconColor} />
@@ -174,6 +174,9 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 16,
+  },
+  categoryContainerTablet: {
+    flexBasis: '48%',
   },
   header: {
     gap: 8,

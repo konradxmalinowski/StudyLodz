@@ -19,7 +19,7 @@ export default function StudyScreen() {
   const tintColor = Colors[colorScheme ?? 'light'].tint;
   const textColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
   const borderColor = colorScheme === 'dark' ? '#444' : '#ccc';
-  const { isTablet, padding, col2Width } = useResponsive();
+  const { isTablet, padding } = useResponsive();
 
   const [showPublic, setShowPublic] = useState(true);
   const [showArtistic, setShowArtistic] = useState(true);
@@ -77,7 +77,7 @@ export default function StudyScreen() {
             </View>
             <View style={[styles.universityList, isTablet && styles.universityListTablet]}>
               {filteredUniversities.map((uni) => (
-                <Pressable key={uni.title} onPress={() => handlePress(uni)} style={isTablet && { width: col2Width }}>
+                <Pressable key={uni.title} onPress={() => handlePress(uni)} style={isTablet && styles.universityCardTablet}>
                   <ThemedView style={styles.universityCard} lightColor="#f9f9f9" darkColor="#1c1c1e">
                     <View style={styles.universityInfo}>
                       <ThemedText type="defaultSemiBold">{uni.title}</ThemedText>
@@ -135,6 +135,10 @@ const styles = StyleSheet.create({
   universityListTablet: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    gap: 16,
+  },
+  universityCardTablet: {
+    flexBasis: '48%',
   },
   universityCard: {
     flexDirection: 'row',
