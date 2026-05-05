@@ -25,7 +25,11 @@ const MAP_HTML = `<!DOCTYPE html>
   }).addTo(map);
   function mk(){return L.divIcon({html:'<div class="pin">🎓</div>',className:'',iconSize:[32,32],iconAnchor:[16,16]})}
   L.marker([51.749,19.455],{icon:mk()}).addTo(map).bindPopup('Politechnika Łódzka');
-  L.marker([51.773,19.475],{icon:mk()}).addTo(map).bindPopup('Uniwersytet Łódzki');
+  L.marker([51.773,19.468],{icon:mk()}).addTo(map).bindPopup('Uniwersytet Łódzki');
+  L.marker([51.762,19.453],{icon:mk()}).addTo(map).bindPopup('Uniwersytet Medyczny');
+  L.marker([51.775,19.472],{icon:mk()}).addTo(map).bindPopup('Akademia Sztuk Pięknych');
+  L.marker([51.769,19.464],{icon:mk()}).addTo(map).bindPopup('Akademia Muzyczna');
+  L.marker([51.758,19.480],{icon:mk()}).addTo(map).bindPopup('Szkoła Filmowa');
 </script>
 </body>
 </html>`;
