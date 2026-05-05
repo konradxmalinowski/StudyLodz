@@ -267,7 +267,8 @@ export default function LodzScreen() {
             </ThemedView>
           </AnimatedCard>
         ))}
-      </ContentContainer></ScrollView>
+        </ContentContainer>
+      </ScrollView>
     </SafeAreaView>
   );
 }

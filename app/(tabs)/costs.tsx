@@ -100,7 +100,8 @@ export default function CostsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.scroll}><ContentContainer>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <ContentContainer>
         <View style={styles.header}>
           <ThemedText type="title">Kalkulator kosztów życia</ThemedText>
           <ThemedText style={styles.subtitle}>
@@ -161,7 +162,8 @@ export default function CostsScreen() {
           </View>
           <ThemedText style={[styles.totalValue, { color: tintColor }]}>{totalCost} PLN</ThemedText>
         </LinearGradient>
-      </ContentContainer></ScrollView>
+        </ContentContainer>
+      </ScrollView>
     </SafeAreaView>
   );
 }

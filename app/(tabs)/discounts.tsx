@@ -35,7 +35,8 @@ export default function DiscountsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.scroll}><ContentContainer>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <ContentContainer>
         <AnimatedCard>
           <ThemedView style={styles.header}>
             <ThemedText type="title">Zniżki studenckie w Łodzi</ThemedText>
@@ -124,7 +125,8 @@ export default function DiscountsScreen() {
             </View>
           </View>
         </AnimatedCard>
-      </ContentContainer></ScrollView>
+        </ContentContainer>
+      </ScrollView>
     </SafeAreaView>
   );
 }

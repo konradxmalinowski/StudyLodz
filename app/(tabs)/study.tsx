@@ -48,7 +48,8 @@ export default function StudyScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.scroll}><ContentContainer>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <ContentContainer>
         <AnimatedCard delay={200} style={styles.cardContainer}>
           <ThemedView style={styles.section}>
             <ThemedText type="subtitle" style={styles.appleTitle}>
@@ -102,7 +103,8 @@ export default function StudyScreen() {
             </ThemedText>
           </ThemedView>
         </AnimatedCard>
-      </ContentContainer></ScrollView>
+        </ContentContainer>
+      </ScrollView>
     </SafeAreaView>
   );
 }
