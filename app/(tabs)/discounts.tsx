@@ -195,6 +195,7 @@ const styles = StyleSheet.create({
   partnersGridTablet: {
     flexDirection: 'row',
     flexWrap: 'wrap',
+    alignItems: 'stretch',
     gap: 10,
   },
   partnerCardWrapper: {
@@ -210,6 +211,7 @@ const styles = StyleSheet.create({
     gap: 10,
     padding: 14,
     borderRadius: 12,
+    flex: 1,
   },
   partnerContent: {
     flex: 1,
