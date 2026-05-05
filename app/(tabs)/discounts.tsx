@@ -1,4 +1,5 @@
 import { AnimatedCard } from '@/components/animated-card';
+import { ContentContainer } from '@/components/content-container';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
@@ -15,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function DiscountsScreen() {
   const colorScheme = useColorScheme();
   const tintColor = Colors[colorScheme ?? 'light'].tint;
-  const { isTablet, padding } = useResponsive();
+  const { isTablet, padding, col2Width } = useResponsive();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const openLink = (url: string) => {
@@ -34,7 +35,7 @@ export default function DiscountsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={[styles.container, { padding }]}>
+      <ScrollView contentContainerStyle={styles.scroll}><ContentContainer>
         <AnimatedCard>
           <ThemedView style={styles.header}>
             <ThemedText type="title">Zniżki studenckie w Łodzi</ThemedText>
@@ -104,7 +105,7 @@ export default function DiscountsScreen() {
               <Pressable
                 key={partner.name}
                 onPress={partner.url ? () => openLink(partner.url!) : undefined}
-                style={({ pressed }) => [styles.partnerRow, isTablet && styles.partnerRowTablet, pressed && { opacity: 0.7 }]}
+                style={({ pressed }) => [styles.partnerRow, isTablet && { width: col2Width, borderBottomWidth: 0, borderWidth: StyleSheet.hairlineWidth, borderColor: '#ccc', borderRadius: 8, padding: 8 }, pressed && { opacity: 0.7 }]}
               >
                 <View style={styles.partnerContent}>
                   <ThemedText type="defaultSemiBold">{partner.name}</ThemedText>
@@ -121,14 +122,14 @@ export default function DiscountsScreen() {
             </View>
           </ThemedView>
         </AnimatedCard>
-      </ScrollView>
+      </ContentContainer></ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 24,
+  scroll: {
+    flexGrow: 1,
   },
   header: {
     gap: 8,
@@ -207,15 +208,6 @@ const styles = StyleSheet.create({
   partnersGridTablet: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 4,
-  },
-  partnerRowTablet: {
-    flexBasis: '48%',
-    flexGrow: 1,
-    borderBottomWidth: 0,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 8,
+    gap: 8,
   },
 });

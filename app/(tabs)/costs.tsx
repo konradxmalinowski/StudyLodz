@@ -1,3 +1,4 @@
+import { ContentContainer } from '@/components/content-container';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
@@ -69,7 +70,7 @@ export default function CostsScreen() {
   const tintColor = Colors[colorScheme ?? 'light'].tint;
   const iconColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
   const gradientColors: [string, string] = colorScheme === 'dark' ? ['#1c1c1e', '#2c2c2e'] : ['#f9f9f9', '#e9e9e9'];
-  const { isTablet, padding, screenWidth } = useResponsive();
+  const { isTablet, padding, screenWidth, col2Width } = useResponsive();
 
   const [costs, setCosts] = useState(initialCosts);
 
@@ -99,7 +100,7 @@ export default function CostsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={[styles.container, { padding }]}>
+      <ScrollView contentContainerStyle={styles.scroll}><ContentContainer>
         <View style={styles.header}>
           <ThemedText type="title">Kalkulator kosztów życia</ThemedText>
           <ThemedText style={styles.subtitle}>
@@ -125,9 +126,9 @@ export default function CostsScreen() {
           paddingLeft="15"
         />
 
-        <View style={isTablet ? styles.categoriesGridTablet : undefined}>
+        <View style={isTablet ? [styles.categoriesGridTablet] : undefined}>
         {CATEGORIES.map((category) => (
-          <ThemedView key={category.key} style={[styles.categoryContainer, isTablet && styles.categoryContainerTablet]} lightColor="#f9f9f9" darkColor="#1c1c1e">
+          <ThemedView key={category.key} style={[styles.categoryContainer, isTablet && { width: col2Width }]} lightColor="#f9f9f9" darkColor="#1c1c1e">
             <View style={styles.categoryHeader}>
               <View style={styles.categoryTitle}>
                 <MaterialCommunityIcons name={category.icon as any} size={24} color={iconColor} />
@@ -160,23 +161,19 @@ export default function CostsScreen() {
           </View>
           <ThemedText style={[styles.totalValue, { color: tintColor }]}>{totalCost} PLN</ThemedText>
         </LinearGradient>
-      </ScrollView>
+      </ContentContainer></ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 24,
+  scroll: {
+    flexGrow: 1,
   },
   categoriesGridTablet: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 16,
-  },
-  categoryContainerTablet: {
-    flexBasis: '48%',
-    flexGrow: 1,
   },
   header: {
     gap: 8,

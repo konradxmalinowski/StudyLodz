@@ -1,4 +1,5 @@
 import { AnimatedCard } from '@/components/animated-card';
+import { ContentContainer } from '@/components/content-container';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { CustomCheckbox } from '@/components/ui/custom-checkbox';
@@ -18,7 +19,7 @@ export default function StudyScreen() {
   const tintColor = Colors[colorScheme ?? 'light'].tint;
   const textColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
   const borderColor = colorScheme === 'dark' ? '#444' : '#ccc';
-  const { isTablet, padding } = useResponsive();
+  const { isTablet, padding, col2Width } = useResponsive();
 
   const [showPublic, setShowPublic] = useState(true);
   const [showArtistic, setShowArtistic] = useState(true);
@@ -47,7 +48,7 @@ export default function StudyScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={[styles.container, { paddingHorizontal: padding }]}>
+      <ScrollView contentContainerStyle={styles.scroll}><ContentContainer>
         <AnimatedCard delay={200} style={styles.cardContainer}>
           <ThemedView style={styles.section}>
             <ThemedText type="subtitle" style={styles.appleTitle}>
@@ -76,7 +77,7 @@ export default function StudyScreen() {
             </View>
             <View style={[styles.universityList, isTablet && styles.universityListTablet]}>
               {filteredUniversities.map((uni) => (
-                <Pressable key={uni.title} onPress={() => handlePress(uni)} style={isTablet && styles.universityCardTablet}>
+                <Pressable key={uni.title} onPress={() => handlePress(uni)} style={isTablet && { width: col2Width }}>
                   <ThemedView style={styles.universityCard} lightColor="#f9f9f9" darkColor="#1c1c1e">
                     <View style={styles.universityInfo}>
                       <ThemedText type="defaultSemiBold">{uni.title}</ThemedText>
@@ -101,15 +102,14 @@ export default function StudyScreen() {
             </ThemedText>
           </ThemedView>
         </AnimatedCard>
-      </ScrollView>
+      </ContentContainer></ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    paddingVertical: 24,
-    gap: 24,
+  scroll: {
+    flexGrow: 1,
   },
   cardContainer: {
     marginBottom: 20,
@@ -147,10 +147,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
-  },
-  universityCardTablet: {
-    flexBasis: '48%',
-    flexGrow: 1,
   },
   universityInfo: {
     flex: 1,

@@ -1,4 +1,5 @@
 
+import { ContentContainer } from '@/components/content-container';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
@@ -69,7 +70,7 @@ export default function ScholarshipScreen() {
   const tintColor = Colors[colorScheme ?? 'light'].tint;
   const iconColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
   const gradientColors: [string, string] = colorScheme === 'dark' ? ['#1c1c1e', '#2c2c2e'] : ['#f9f9f9', '#e9e9e9'];
-  const { isTablet, padding } = useResponsive();
+  const { isTablet, padding, col2Width } = useResponsive();
 
   const openLink = (url: string) => {
     Linking.openURL(url).catch(() => {});
@@ -77,7 +78,7 @@ export default function ScholarshipScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={[styles.container, { padding }]}>
+      <ScrollView contentContainerStyle={styles.scroll}><ContentContainer>
         <View style={styles.header}>
           <ThemedText type="title">Stypendia i życie studenckie</ThemedText>
           <ThemedText style={styles.subtitle}>
@@ -89,7 +90,7 @@ export default function ScholarshipScreen() {
           <ThemedText type="subtitle" style={styles.sectionTitle}>Dostępne stypendia</ThemedText>
           <View style={isTablet ? styles.gridTablet : undefined}>
           {SCHOLARSHIPS.map((item) => (
-            <Pressable key={item.title} onPress={() => item.url && openLink(item.url)} style={isTablet && styles.gridItemTablet}>
+            <Pressable key={item.title} onPress={() => item.url && openLink(item.url)} style={isTablet && { width: col2Width }}>
               <LinearGradient colors={gradientColors} style={styles.card}>
                 <MaterialCommunityIcons name={item.icon as any} size={28} color={tintColor} />
                 <View style={styles.cardContent}>
@@ -118,23 +119,19 @@ export default function ScholarshipScreen() {
             </LinearGradient>
           ))}
         </ThemedView>
-      </ScrollView>
+      </ContentContainer></ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    gap: 24,
+  scroll: {
+    flexGrow: 1,
   },
   gridTablet: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     gap: 16,
-  },
-  gridItemTablet: {
-    flexBasis: '48%',
-    flexGrow: 1,
   },
   header: {
     gap: 8,

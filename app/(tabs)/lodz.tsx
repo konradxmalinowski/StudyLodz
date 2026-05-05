@@ -1,4 +1,5 @@
 import { AnimatedCard } from '@/components/animated-card';
+import { ContentContainer } from '@/components/content-container';
 import { ReadMore } from '@/components/read-more';
 import { StudyMap } from '@/components/study-map';
 import { ThemedText } from '@/components/themed-text';
@@ -130,7 +131,7 @@ const SECTIONS = [
 export default function LodzScreen() {
   const colorScheme = useColorScheme();
   const tintColor = Colors[colorScheme ?? 'light'].tint;
-  const { isTablet, padding } = useResponsive();
+  const { isTablet, padding, col2Width } = useResponsive();
   const imageOpacity = useSharedValue(0);
   const router = useRouter();
 
@@ -140,7 +141,7 @@ export default function LodzScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={[styles.container, { padding }]}>
+      <ScrollView contentContainerStyle={styles.scroll}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.gallery, { paddingHorizontal: padding }]}>
           {(['lodz1.jpg', 'lodz2.jpg', 'lodz3.png', 'lodz4.png', 'lodz5.png'] as const).map((name) => (
             <Pressable key={name} onPress={() => router.push({ pathname: '/modal', params: { image: name } })}>
@@ -157,6 +158,7 @@ export default function LodzScreen() {
             </Pressable>
           ))}
         </ScrollView>
+        <ContentContainer>
 
         <AnimatedCard style={styles.cardContainer}>
           <ThemedView style={styles.section}>
@@ -185,7 +187,7 @@ export default function LodzScreen() {
               {BENEFITS.map((card) => (
                 <ThemedView
                   key={card.title}
-                  style={styles.card}
+                  style={[styles.card, isTablet && { width: col2Width, flex: 0 }]}
                   lightColor={card.lightColor}
                   darkColor={card.darkColor}>
                   <View style={styles.cardHeader}>
@@ -206,7 +208,7 @@ export default function LodzScreen() {
                 </ThemedText>
                 <View style={styles.grid}>
                 {TIDBITS.map((tidbit) => (
-                    <ThemedView key={tidbit.title} style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
+                    <ThemedView key={tidbit.title} style={[styles.card, isTablet && { width: col2Width, flex: 0 }]} lightColor="#f9f9f9" darkColor="#1c1c1e">
                     <View style={styles.cardHeader}>
                         <IconSymbol name={tidbit.icon as any} size={24} color={tintColor} />
                         <ThemedText type="defaultSemiBold" style={{ flexShrink: 1 }}>{tidbit.title}</ThemedText>
@@ -240,7 +242,7 @@ export default function LodzScreen() {
             </ThemedText>
             <View style={styles.grid}>
               {NEIGHBORHOODS.map((neighborhood) => (
-                <ThemedView key={neighborhood.title} style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
+                <ThemedView key={neighborhood.title} style={[styles.card, isTablet && { width: col2Width, flex: 0 }]} lightColor="#f9f9f9" darkColor="#1c1c1e">
                   <View style={styles.cardHeader}>
                     <IconSymbol name={neighborhood.icon as any} size={24} color={tintColor} />
                     <ThemedText type="defaultSemiBold" style={{ flexShrink: 1 }}>{neighborhood.title}</ThemedText>
@@ -265,14 +267,14 @@ export default function LodzScreen() {
             </ThemedView>
           </AnimatedCard>
         ))}
-      </ScrollView>
+      </ContentContainer></ScrollView>
     </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-    container: {
-      gap: 24,
+    scroll: {
+      flexGrow: 1,
     },
     gallery: {
       gap: 16,
