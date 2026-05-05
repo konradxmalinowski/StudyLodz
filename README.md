@@ -15,6 +15,7 @@ A mobile app for every student in Łódź, Poland. It aggregates university info
 - [Project Structure](#project-structure)
 - [Getting Started](#getting-started)
 - [Available Scripts](#available-scripts)
+- [Data Sources](#data-sources)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -157,6 +158,10 @@ Expo developer tools will open in your browser. Then choose a target:
 | `npm run web` | Run in a web browser |
 | `npm run lint` | Run ESLint |
 | `npm run reset-project` | Reset Expo project state |
+
+## Data Sources
+
+Most content in the app is static. [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md) documents every hardcoded dataset: what it is, where it came from, what should eventually be scraped, and how often it should be refreshed.
 
 ## Contributing
 
