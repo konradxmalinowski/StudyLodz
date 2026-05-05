@@ -19,8 +19,9 @@ const MAP_HTML = `<!DOCTYPE html>
 <div id="map"></div>
 <script>
   var map=L.map('map',{zoomControl:false}).setView([51.761,19.465],13);
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{
-    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',{
+    attribution:'&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+    subdomains:'abcd',
     maxZoom:19
   }).addTo(map);
   function mk(){return L.divIcon({html:'<div class="pin">🎓</div>',className:'',iconSize:[32,32],iconAnchor:[16,16]})}
@@ -38,7 +39,7 @@ export function StudyMap() {
   return (
     <View style={styles.container}>
       <WebView
-        source={{ html: MAP_HTML, baseUrl: 'https://www.openstreetmap.org' }}
+        source={{ html: MAP_HTML }}
         style={styles.map}
         scrollEnabled={false}
         showsVerticalScrollIndicator={false}
