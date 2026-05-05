@@ -4,9 +4,9 @@ import { ThemedView } from '@/components/themed-view';
 import { CustomCheckbox } from '@/components/ui/custom-checkbox';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
-import { UNIVERSITIES } from '@/constants/universities';
+import { University, UNIVERSITIES } from '@/constants/universities';
 import { useColorScheme } from '@/hooks/use-color-scheme';
-import { Link, useRouter } from 'expo-router';
+import { useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View, LayoutAnimation, UIManager, Platform, Pressable, TextInput } from 'react-native';
 import * as Haptics from 'expo-haptics';
@@ -41,7 +41,7 @@ export default function StudyScreen() {
     setter(value);
   }
 
-  const handlePress = (university: any) => {
+  const handlePress = (university: University) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     router.push({ pathname: '/modal', params: { university: university.title } });
   }

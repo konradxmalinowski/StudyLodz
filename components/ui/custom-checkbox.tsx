@@ -12,7 +12,7 @@ const THUMB_SIZE = 26;
 
 export function CustomSwitch({ value, onValueChange }: { value: boolean; onValueChange: (value: boolean) => void }) {
   const trackColor = useThemeColor({ light: '#E9E9EA', dark: '#39393D' }, 'background');
-  const thumbColor = useThemeColor({ light: '#FFFFFF', dark: '#1C1C1E' }, 'thumb');
+  const thumbColor = useThemeColor({ light: '#FFFFFF', dark: '#1C1C1E' }, 'background');
   const activeTrackColor = useThemeColor({}, 'tint');
 
   const translateX = useSharedValue(value ? SWITCH_WIDTH - THUMB_SIZE - 4 : 4);

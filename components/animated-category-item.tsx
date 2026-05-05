@@ -14,7 +14,7 @@ export function AnimatedCategoryItem({ children, index }: AnimatedCategoryItemPr
   useEffect(() => {
     opacity.value = withTiming(1, { duration: 500, easing: Easing.out(Easing.ease), delay: index * 100 });
     translateY.value = withTiming(0, { duration: 500, easing: Easing.out(Easing.ease), delay: index * 100 });
-  }, []);
+  }, [opacity, translateY, index]);
 
   const animatedStyle = useAnimatedStyle(() => {
     return {

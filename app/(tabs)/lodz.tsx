@@ -251,7 +251,7 @@ export default function LodzScreen() {
         </AnimatedCard>
 
         {SECTIONS.map((section, index) => (
-          <AnimatedCard key={index} delay={400 + index * 100}>
+          <AnimatedCard key={section.title} delay={400 + index * 100}>
             <ThemedView style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
               <View style={styles.cardHeader}>
                 <Pressable onPress={() => router.push({ pathname: '/modal', params: { image: section.imageName } })}>

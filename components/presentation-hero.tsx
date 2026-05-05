@@ -7,7 +7,7 @@ export function PresentationHero({ onPress }: { onPress?: () => void }) {
   return (
     <TouchableOpacity onPress={onPress} activeOpacity={0.9} style={styles.outer}>
       <ImageBackground
-        source={require('@/assets/images/image2.jpg')}
+        source={require('@/assets/images/image.jpg')}
         style={styles.image}
         imageStyle={styles.imageStyle}
         resizeMode="cover">

@@ -145,7 +145,6 @@ const styles = StyleSheet.create({
   },
   card: {
     padding: 30,
-    wordWrap: 'break-word',
     borderRadius: 20,
     gap: 20,
     shadowColor: '#000',

@@ -29,6 +29,13 @@ export default function ModalScreen() {
 
   if (imageName) {
     const imageSource = IMAGE_SOURCES[imageName];
+    if (!imageSource) {
+      return (
+        <Pressable style={styles.modalContainer} onPress={() => router.back()}>
+          <ThemedText style={{ color: '#fff' }}>Nie znaleziono obrazu</ThemedText>
+        </Pressable>
+      );
+    }
     return (
       <Pressable style={styles.modalContainer} onPress={() => router.back()}>
         <Image source={imageSource} style={styles.modalImage} />
