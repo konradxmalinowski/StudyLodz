@@ -35,6 +35,11 @@ const MAPPING = {
   'fork.knife': 'restaurant',
   'heart.fill': 'favorite',
   checkmark: 'check',
+  'graduationcap.fill': 'school',
+  'graduationcap.circle': 'school',
+  'building.2.crop.circle': 'apartment',
+  'tree.circle': 'park',
+  'tram.circle': 'tram',
 } as IconMapping;
 
 /**

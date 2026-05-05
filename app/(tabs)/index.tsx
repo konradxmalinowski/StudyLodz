@@ -44,7 +44,7 @@ export default function HomeScreen() {
   useEffect(() => {
     imageOpacity.value = withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) });
     titleTranslateY.value = withTiming(0, { duration: 600, easing: Easing.out(Easing.ease), delay: 200 });
-  }, []);
+  }, [imageOpacity, titleTranslateY]);
 
   const handlePress = (href: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
@@ -152,7 +152,6 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
-    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',

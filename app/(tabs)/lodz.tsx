@@ -133,7 +133,7 @@ export default function LodzScreen() {
 
   React.useEffect(() => {
     imageOpacity.value = withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) });
-  }, []);
+  }, [imageOpacity]);
 
   return (
     <SafeAreaView style={{ flex: 1 }}>

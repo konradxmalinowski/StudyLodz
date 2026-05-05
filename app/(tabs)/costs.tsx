@@ -152,8 +152,7 @@ export default function CostsScreen() {
 
         <LinearGradient colors={gradientColors} style={[styles.totalContainer, { borderLeftColor: tintColor }]}>
           <View style={styles.totalHeader}>
-            <ThemedText style={styles.totalLabel}>Całkowity koszt miesięczny:</ThemedText> 
-            <ThemedText> </ThemedText>
+            <ThemedText style={styles.totalLabel}>Całkowity koszt miesięczny:</ThemedText>
             <Pressable onPress={resetCosts}>
               <MaterialCommunityIcons name="restore" size={24} color={iconColor} />
             </Pressable>

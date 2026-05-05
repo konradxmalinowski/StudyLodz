@@ -65,7 +65,7 @@ export default function ScholarshipScreen() {
   const gradientColors: [string, string] = colorScheme === 'dark' ? ['#1c1c1e', '#2c2c2e'] : ['#f9f9f9', '#e9e9e9'];
 
   const openLink = (url: string) => {
-    Linking.openURL(url).catch(err => console.error("Couldn't load page", err));
+    Linking.openURL(url).catch(() => {});
   };
 
   return (
@@ -80,8 +80,8 @@ export default function ScholarshipScreen() {
 
         <ThemedView style={styles.sectionContainer}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>Dostępne stypendia</ThemedText>
-          {SCHOLARSHIPS.map((item, index) => (
-            <Pressable key={index} onPress={() => item.url && openLink(item.url)}>
+          {SCHOLARSHIPS.map((item) => (
+            <Pressable key={item.title} onPress={() => item.url && openLink(item.url)}>
               <LinearGradient colors={gradientColors} style={styles.card}>
                 <MaterialCommunityIcons name={item.icon as any} size={28} color={tintColor} />
                 <View style={styles.cardContent}>
@@ -96,8 +96,8 @@ export default function ScholarshipScreen() {
 
         <ThemedView style={styles.sectionContainer}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>Nie samą nauką student żyje</ThemedText>
-          {STUDENT_LIFE.map((item, index) => (
-            <LinearGradient key={index} colors={gradientColors} style={styles.card}>
+          {STUDENT_LIFE.map((item) => (
+            <LinearGradient key={item.title} colors={gradientColors} style={styles.card}>
               <MaterialCommunityIcons name={item.icon as any} size={28} color={tintColor} />
               <View style={styles.cardContent}>
                 <ThemedText type="defaultSemiBold">{item.title}</ThemedText>

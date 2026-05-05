@@ -58,7 +58,7 @@ export default function DiscountsScreen() {
             <ThemedText type="subtitle">Kategorie zniżek</ThemedText>
             <View style={styles.grid}>
               {DISCOUNT_CATEGORIES.map((category, index) => (
-                <AnimatedCategoryItem key={index} index={index}>
+                <AnimatedCategoryItem key={category.name} index={index}>
                   <View style={styles.categoryItem}>
                     <IconSymbol name={category.icon as any} size={28} color={tintColor} />
                     <ThemedText style={styles.categoryText}>{category.name}</ThemedText>
