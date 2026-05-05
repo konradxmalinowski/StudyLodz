@@ -1,5 +1,5 @@
 import type { PropsWithChildren, ReactElement } from 'react';
-import { StyleSheet } from 'react-native';
+import { StyleSheet, View, useWindowDimensions } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -10,8 +10,7 @@ import Animated, {
 import { ThemedView } from '@/components/themed-view';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useThemeColor } from '@/hooks/use-theme-color';
-
-const HEADER_HEIGHT = 250;
+import { CONTENT_MAX_WIDTH, TABLET_BREAKPOINT } from '@/hooks/use-responsive';
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
@@ -25,6 +24,11 @@ export default function ParallaxScrollView({
 }: Props) {
   const backgroundColor = useThemeColor({}, 'background');
   const colorScheme = useColorScheme() ?? 'light';
+  const { width } = useWindowDimensions();
+  const isTablet = width >= TABLET_BREAKPOINT;
+  const headerHeight = isTablet ? 360 : 250;
+  const contentPadding = isTablet ? 48 : 32;
+
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollOffset(scrollRef);
   const headerAnimatedStyle = useAnimatedStyle(() => {
@@ -33,12 +37,12 @@ export default function ParallaxScrollView({
         {
           translateY: interpolate(
             scrollOffset.value,
-            [-HEADER_HEIGHT, 0, HEADER_HEIGHT],
-            [-HEADER_HEIGHT / 2, 0, HEADER_HEIGHT * 0.75]
+            [-headerHeight, 0, headerHeight],
+            [-headerHeight / 2, 0, headerHeight * 0.75]
           ),
         },
         {
-          scale: interpolate(scrollOffset.value, [-HEADER_HEIGHT, 0, HEADER_HEIGHT], [2, 1, 1]),
+          scale: interpolate(scrollOffset.value, [-headerHeight, 0, headerHeight], [2, 1, 1]),
         },
       ],
     };
@@ -51,25 +55,24 @@ export default function ParallaxScrollView({
       scrollEventThrottle={16}>
       <Animated.View
         style={[
-          styles.header,
+          { height: headerHeight, overflow: 'hidden' },
           { backgroundColor: headerBackgroundColor[colorScheme] },
           headerAnimatedStyle,
         ]}>
         {headerImage}
       </Animated.View>
-      <ThemedView style={styles.content}>{children}</ThemedView>
+      <ThemedView style={[styles.content, { padding: contentPadding }]}>
+        <View style={isTablet ? { maxWidth: CONTENT_MAX_WIDTH, alignSelf: 'center', width: '100%' } : undefined}>
+          {children}
+        </View>
+      </ThemedView>
     </Animated.ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
-  header: {
-    height: HEADER_HEIGHT,
-    overflow: 'hidden',
-  },
   content: {
     flex: 1,
-    padding: 32,
     gap: 16,
     overflow: 'hidden',
   },

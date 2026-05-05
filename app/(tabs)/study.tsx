@@ -6,6 +6,7 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { University, UNIVERSITIES } from '@/constants/universities';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useResponsive } from '@/hooks/use-responsive';
 import { useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
 import { ScrollView, StyleSheet, View, LayoutAnimation, Pressable, TextInput } from 'react-native';
@@ -17,6 +18,7 @@ export default function StudyScreen() {
   const tintColor = Colors[colorScheme ?? 'light'].tint;
   const textColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
   const borderColor = colorScheme === 'dark' ? '#444' : '#ccc';
+  const { isTablet, padding } = useResponsive();
 
   const [showPublic, setShowPublic] = useState(true);
   const [showArtistic, setShowArtistic] = useState(true);
@@ -36,16 +38,16 @@ export default function StudyScreen() {
   const handleCheckboxChange = (setter: (value: boolean) => void, value: boolean) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
     setter(value);
-  }
+  };
 
   const handlePress = (university: University) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     router.push({ pathname: '/modal', params: { university: university.title } });
-  }
+  };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={[styles.container, { paddingHorizontal: padding }]}>
         <AnimatedCard delay={200} style={styles.cardContainer}>
           <ThemedView style={styles.section}>
             <ThemedText type="subtitle" style={styles.appleTitle}>
@@ -72,9 +74,9 @@ export default function StudyScreen() {
                 <CustomCheckbox value={showArtistic} onValueChange={(value) => handleCheckboxChange(setShowArtistic, value)} />
               </View>
             </View>
-            <View style={styles.universityList}>
+            <View style={[styles.universityList, isTablet && styles.universityListTablet]}>
               {filteredUniversities.map((uni) => (
-                <Pressable key={uni.title} onPress={() => handlePress(uni)}>
+                <Pressable key={uni.title} onPress={() => handlePress(uni)} style={isTablet && styles.universityCardTablet}>
                   <ThemedView style={styles.universityCard} lightColor="#f9f9f9" darkColor="#1c1c1e">
                     <View style={styles.universityInfo}>
                       <ThemedText type="defaultSemiBold">{uni.title}</ThemedText>
@@ -106,7 +108,6 @@ export default function StudyScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    paddingHorizontal: 24,
     paddingVertical: 24,
     gap: 24,
   },
@@ -131,6 +132,10 @@ const styles = StyleSheet.create({
     gap: 16,
     paddingTop: 8,
   },
+  universityListTablet: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   universityCard: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -142,6 +147,10 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.1,
     shadowRadius: 8,
     elevation: 5,
+  },
+  universityCardTablet: {
+    flexBasis: '48%',
+    flexGrow: 1,
   },
   universityInfo: {
     flex: 1,

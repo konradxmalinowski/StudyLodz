@@ -3,6 +3,7 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useResponsive } from '@/hooks/use-responsive';
 import React from 'react';
 import { ScrollView, StyleSheet, View, Linking, Pressable } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -68,6 +69,7 @@ export default function ScholarshipScreen() {
   const tintColor = Colors[colorScheme ?? 'light'].tint;
   const iconColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
   const gradientColors: [string, string] = colorScheme === 'dark' ? ['#1c1c1e', '#2c2c2e'] : ['#f9f9f9', '#e9e9e9'];
+  const { isTablet, padding } = useResponsive();
 
   const openLink = (url: string) => {
     Linking.openURL(url).catch(() => {});
@@ -75,7 +77,7 @@ export default function ScholarshipScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={[styles.container, { padding }]}>
         <View style={styles.header}>
           <ThemedText type="title">Stypendia i życie studenckie</ThemedText>
           <ThemedText style={styles.subtitle}>
@@ -85,8 +87,9 @@ export default function ScholarshipScreen() {
 
         <ThemedView style={styles.sectionContainer}>
           <ThemedText type="subtitle" style={styles.sectionTitle}>Dostępne stypendia</ThemedText>
+          <View style={isTablet ? styles.gridTablet : undefined}>
           {SCHOLARSHIPS.map((item) => (
-            <Pressable key={item.title} onPress={() => item.url && openLink(item.url)}>
+            <Pressable key={item.title} onPress={() => item.url && openLink(item.url)} style={isTablet && styles.gridItemTablet}>
               <LinearGradient colors={gradientColors} style={styles.card}>
                 <MaterialCommunityIcons name={item.icon as any} size={28} color={tintColor} />
                 <View style={styles.cardContent}>
@@ -100,6 +103,7 @@ export default function ScholarshipScreen() {
               </LinearGradient>
             </Pressable>
           ))}
+          </View>
         </ThemedView>
 
         <ThemedView style={styles.sectionContainer}>
@@ -121,8 +125,16 @@ export default function ScholarshipScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 32,
     gap: 24,
+  },
+  gridTablet: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 16,
+  },
+  gridItemTablet: {
+    flexBasis: '48%',
+    flexGrow: 1,
   },
   header: {
     gap: 8,

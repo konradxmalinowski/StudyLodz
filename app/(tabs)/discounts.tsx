@@ -5,6 +5,7 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { DISCOUNT_CATEGORIES, DISCOUNT_PARTNERS } from '@/constants/discounts';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useResponsive } from '@/hooks/use-responsive';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
@@ -14,6 +15,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function DiscountsScreen() {
   const colorScheme = useColorScheme();
   const tintColor = Colors[colorScheme ?? 'light'].tint;
+  const { isTablet, padding } = useResponsive();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const openLink = (url: string) => {
@@ -32,7 +34,7 @@ export default function DiscountsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={[styles.container, { padding }]}>
         <AnimatedCard>
           <ThemedView style={styles.header}>
             <ThemedText type="title">Zniżki studenckie w Łodzi</ThemedText>
@@ -97,11 +99,12 @@ export default function DiscountsScreen() {
             <ThemedText style={styles.hint}>
               {visiblePartners.length} {visiblePartners.length === 1 ? 'partner' : 'partnerów'} — dane orientacyjne, zweryfikuj na kartalodzianina.pl
             </ThemedText>
+            <View style={isTablet ? styles.partnersGridTablet : undefined}>
             {visiblePartners.map((partner) => (
               <Pressable
                 key={partner.name}
                 onPress={partner.url ? () => openLink(partner.url!) : undefined}
-                style={({ pressed }) => [styles.partnerRow, pressed && { opacity: 0.7 }]}
+                style={({ pressed }) => [styles.partnerRow, isTablet && styles.partnerRowTablet, pressed && { opacity: 0.7 }]}
               >
                 <View style={styles.partnerContent}>
                   <ThemedText type="defaultSemiBold">{partner.name}</ThemedText>
@@ -115,6 +118,7 @@ export default function DiscountsScreen() {
                 )}
               </Pressable>
             ))}
+            </View>
           </ThemedView>
         </AnimatedCard>
       </ScrollView>
@@ -124,7 +128,6 @@ export default function DiscountsScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 32,
     gap: 24,
   },
   header: {
@@ -200,5 +203,19 @@ const styles = StyleSheet.create({
   addressText: {
     fontSize: 12,
     opacity: 0.5,
+  },
+  partnersGridTablet: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 4,
+  },
+  partnerRowTablet: {
+    flexBasis: '48%',
+    flexGrow: 1,
+    borderBottomWidth: 0,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 8,
   },
 });

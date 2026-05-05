@@ -2,12 +2,13 @@ import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useResponsive } from '@/hooks/use-responsive';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import * as Haptics from 'expo-haptics';
 import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
-import { Dimensions, LayoutAnimation, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { LayoutAnimation, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { PieChart } from 'react-native-chart-kit';
 
@@ -68,6 +69,7 @@ export default function CostsScreen() {
   const tintColor = Colors[colorScheme ?? 'light'].tint;
   const iconColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
   const gradientColors: [string, string] = colorScheme === 'dark' ? ['#1c1c1e', '#2c2c2e'] : ['#f9f9f9', '#e9e9e9'];
+  const { isTablet, padding, screenWidth } = useResponsive();
 
   const [costs, setCosts] = useState(initialCosts);
 
@@ -97,7 +99,7 @@ export default function CostsScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container}>
+      <ScrollView contentContainerStyle={[styles.container, { padding }]}>
         <View style={styles.header}>
           <ThemedText type="title">Kalkulator kosztów życia</ThemedText>
           <ThemedText style={styles.subtitle}>
@@ -107,7 +109,7 @@ export default function CostsScreen() {
 
         <PieChart
           data={chartData}
-          width={Dimensions.get('window').width - 64}
+          width={Math.min(screenWidth - padding * 2, 860)}
           height={220}
           chartConfig={{
             backgroundColor: 'transparent',
@@ -123,8 +125,9 @@ export default function CostsScreen() {
           paddingLeft="15"
         />
 
+        <View style={isTablet ? styles.categoriesGridTablet : undefined}>
         {CATEGORIES.map((category) => (
-          <ThemedView key={category.key} style={styles.categoryContainer} lightColor="#f9f9f9" darkColor="#1c1c1e">
+          <ThemedView key={category.key} style={[styles.categoryContainer, isTablet && styles.categoryContainerTablet]} lightColor="#f9f9f9" darkColor="#1c1c1e">
             <View style={styles.categoryHeader}>
               <View style={styles.categoryTitle}>
                 <MaterialCommunityIcons name={category.icon as any} size={24} color={iconColor} />
@@ -146,6 +149,7 @@ export default function CostsScreen() {
             />
           </ThemedView>
         ))}
+        </View>
 
         <LinearGradient colors={gradientColors} style={[styles.totalContainer, { borderLeftColor: tintColor }]}>
           <View style={styles.totalHeader}>
@@ -163,8 +167,16 @@ export default function CostsScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    padding: 32,
     gap: 24,
+  },
+  categoriesGridTablet: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 16,
+  },
+  categoryContainerTablet: {
+    flexBasis: '48%',
+    flexGrow: 1,
   },
   header: {
     gap: 8,

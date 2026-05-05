@@ -6,6 +6,7 @@ import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useResponsive } from '@/hooks/use-responsive';
 import { useRouter } from 'expo-router';
 import React, { useEffect } from 'react';
 import { Image, Pressable, ScrollView, StyleSheet, View } from 'react-native';
@@ -129,6 +130,7 @@ const SECTIONS = [
 export default function LodzScreen() {
   const colorScheme = useColorScheme();
   const tintColor = Colors[colorScheme ?? 'light'].tint;
+  const { isTablet, padding } = useResponsive();
   const imageOpacity = useSharedValue(0);
   const router = useRouter();
 
@@ -138,23 +140,22 @@ export default function LodzScreen() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.container}>
-        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.gallery}>
-          <Pressable onPress={() => router.push({ pathname: '/modal', params: { image: 'lodz1.jpg' } })}>
-            <AnimatedImage source={require('@/assets/images/lodz1_jpg.jpg')} style={[styles.image, { opacity: imageOpacity }]} />
-          </Pressable>
-          <Pressable onPress={() => router.push({ pathname: '/modal', params: { image: 'lodz2.jpg' } })}>
-            <AnimatedImage source={require('@/assets/images/lodz2_jpg.jpg')} style={[styles.image, { opacity: imageOpacity }]} />
-          </Pressable>
-          <Pressable onPress={() => router.push({ pathname: '/modal', params: { image: 'lodz3.png' } })}>
-            <AnimatedImage source={require('@/assets/images/lodz3_png.png')} style={[styles.image, { opacity: imageOpacity }]} />
-          </Pressable>
-          <Pressable onPress={() => router.push({ pathname: '/modal', params: { image: 'lodz4.png' } })}>
-            <AnimatedImage source={require('@/assets/images/lodz4_png.png')} style={[styles.image, { opacity: imageOpacity }]} />
-          </Pressable>
-          <Pressable onPress={() => router.push({ pathname: '/modal', params: { image: 'lodz5.png' } })}>
-            <AnimatedImage source={require('@/assets/images/lodz5.png')} style={[styles.image, { opacity: imageOpacity }]} />
-          </Pressable>
+      <ScrollView contentContainerStyle={[styles.container, { padding }]}>
+        <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.gallery, { paddingHorizontal: padding }]}>
+          {(['lodz1.jpg', 'lodz2.jpg', 'lodz3.png', 'lodz4.png', 'lodz5.png'] as const).map((name) => (
+            <Pressable key={name} onPress={() => router.push({ pathname: '/modal', params: { image: name } })}>
+              <AnimatedImage
+                source={
+                  name === 'lodz1.jpg' ? require('@/assets/images/lodz1_jpg.jpg') :
+                  name === 'lodz2.jpg' ? require('@/assets/images/lodz2_jpg.jpg') :
+                  name === 'lodz3.png' ? require('@/assets/images/lodz3_png.png') :
+                  name === 'lodz4.png' ? require('@/assets/images/lodz4_png.png') :
+                  require('@/assets/images/lodz5.png')
+                }
+                style={[styles.image, isTablet && styles.imageTablet, { opacity: imageOpacity }]}
+              />
+            </Pressable>
+          ))}
         </ScrollView>
 
         <AnimatedCard style={styles.cardContainer}>
@@ -271,11 +272,9 @@ export default function LodzScreen() {
 
 const styles = StyleSheet.create({
     container: {
-      padding: 24,
       gap: 24,
     },
     gallery: {
-      paddingHorizontal: 24,
       gap: 16,
       marginBottom: 24,
     },
@@ -284,8 +283,11 @@ const styles = StyleSheet.create({
       height: 300,
       borderRadius: 20,
     },
+    imageTablet: {
+      width: 280,
+      height: 400,
+    },
     cardContainer: {
-      paddingHorizontal: 24,
       marginBottom: 20,
     },
     section: {

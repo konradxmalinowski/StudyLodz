@@ -9,6 +9,7 @@ import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
+import { useResponsive } from '@/hooks/use-responsive';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import { useRouter } from 'expo-router';
@@ -37,6 +38,7 @@ const SECTIONS = [
 export default function HomeScreen() {
   const colorScheme = useColorScheme();
   const tintColor = Colors[colorScheme ?? 'light'].tint;
+  const { isTablet } = useResponsive();
   const imageOpacity = useSharedValue(0);
   const titleTranslateY = useSharedValue(20);
   const router = useRouter();
@@ -49,13 +51,13 @@ export default function HomeScreen() {
   const handlePress = (href: string) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     router.push(href);
-  }
+  };
 
   const titleAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [{ translateY: titleTranslateY.value }],
-      opacity: interpolate(titleTranslateY.value, [20, 0], [0, 1])
-    }
+      opacity: interpolate(titleTranslateY.value, [20, 0], [0, 1]),
+    };
   });
 
   return (
@@ -80,23 +82,25 @@ export default function HomeScreen() {
           </ThemedView>
         </AnimatedCard>
 
-        {SECTIONS.map((section, index) => (
-          <AnimatedCard key={section.title} delay={(index + 1) * 100}>
-            <ThemedView style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
-              <View style={styles.cardHeader}>
-                <IconSymbol name={section.icon as any} size={32} color={tintColor} />
-                <ThemedText type="subtitle" style={{ flexShrink: 1, fontSize: 22 }}>{section.title}</ThemedText>
-              </View>
-              <ThemedText style={styles.cardText}>{section.description}</ThemedText>
-              <Pressable onPress={() => handlePress(section.link)} style={styles.link}>
-                <ThemedView style={[styles.cta, { backgroundColor: tintColor }]} lightColor="#4E56C0" darkColor="#4E56C0">
-                  <ThemedText style={styles.ctaText}>{section.buttonText}</ThemedText>
-                  <MaterialCommunityIcons name="arrow-right" size={20} color="#fff" />
-                </ThemedView>
-              </Pressable>
-            </ThemedView>
-          </AnimatedCard>
-        ))}
+        <View style={isTablet ? styles.sectionsRow : undefined}>
+          {SECTIONS.map((section, index) => (
+            <AnimatedCard key={section.title} delay={(index + 1) * 100} style={isTablet ? styles.sectionCardTablet : undefined}>
+              <ThemedView style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
+                <View style={styles.cardHeader}>
+                  <IconSymbol name={section.icon as any} size={32} color={tintColor} />
+                  <ThemedText type="subtitle" style={{ flexShrink: 1, fontSize: 22 }}>{section.title}</ThemedText>
+                </View>
+                <ThemedText style={styles.cardText}>{section.description}</ThemedText>
+                <Pressable onPress={() => handlePress(section.link)} style={styles.link}>
+                  <ThemedView style={[styles.cta, { backgroundColor: tintColor }]} lightColor="#4E56C0" darkColor="#4E56C0">
+                    <ThemedText style={styles.ctaText}>{section.buttonText}</ThemedText>
+                    <MaterialCommunityIcons name="arrow-right" size={20} color="#fff" />
+                  </ThemedView>
+                </Pressable>
+              </ThemedView>
+            </AnimatedCard>
+          ))}
+        </View>
       </ThemedView>
     </ParallaxScrollView>
   );
@@ -124,6 +128,15 @@ const styles = StyleSheet.create({
   headerImage: {
     width: '100%',
     height: '100%',
+  },
+  sectionsRow: {
+    flexDirection: 'row',
+    gap: 24,
+    alignItems: 'stretch',
+    flexWrap: 'wrap'
+  },
+  sectionCardTablet: {
+    flex: 1,
   },
   link: {
     marginTop: 16,
@@ -154,9 +167,7 @@ const styles = StyleSheet.create({
     elevation: 5,
     flexDirection: 'column',
     justifyContent: 'space-between',
-    alignItems: 'center',
-    width: 400,
-    maxWidth: '98%',
+    flex: 1,
   },
   cardHeader: {
     flexDirection: 'row',
