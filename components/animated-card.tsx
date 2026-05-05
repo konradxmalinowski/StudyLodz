@@ -44,8 +44,9 @@ export function AnimatedCard({
       onPress={onPress}
       onPressIn={onPress ? () => { scale.value = withSpring(0.98); } : undefined}
       onPressOut={onPress ? () => { scale.value = withSpring(1); } : undefined}
+      style={style}
     >
-      <AnimatedThemedView style={[styles.animatedCardContainer, style, animatedStyle]}>
+      <AnimatedThemedView style={[styles.animatedCardContainer, animatedStyle]}>
         {children}
       </AnimatedThemedView>
     </Pressable>

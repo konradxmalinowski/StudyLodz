@@ -93,34 +93,36 @@ export default function DiscountsScreen() {
         </AnimatedCard>
 
         <AnimatedCard delay={300}>
-          <ThemedView style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
+          <View style={styles.partnersSection}>
             <ThemedText type="subtitle">
               {selectedCategory ?? 'Wszystkie zniżki'}
             </ThemedText>
             <ThemedText style={styles.hint}>
               {visiblePartners.length} {visiblePartners.length === 1 ? 'partner' : 'partnerów'} — dane orientacyjne, zweryfikuj na kartalodzianina.pl
             </ThemedText>
-            <View style={isTablet ? styles.partnersGridTablet : undefined}>
-            {visiblePartners.map((partner) => (
-              <Pressable
-                key={partner.name}
-                onPress={partner.url ? () => openLink(partner.url!) : undefined}
-                style={({ pressed }) => [styles.partnerRow, isTablet && styles.partnerRowTablet, pressed && { opacity: 0.7 }]}
-              >
-                <View style={styles.partnerContent}>
-                  <ThemedText type="defaultSemiBold">{partner.name}</ThemedText>
-                  <ThemedText style={styles.discountText}>{partner.discount}</ThemedText>
-                  {partner.address && (
-                    <ThemedText style={styles.addressText}>{partner.address}</ThemedText>
-                  )}
-                </View>
-                {partner.url && (
-                  <MaterialCommunityIcons name="open-in-new" size={18} color={tintColor} />
-                )}
-              </Pressable>
-            ))}
+            <View style={[styles.partnersGrid, isTablet && styles.partnersGridTablet]}>
+              {visiblePartners.map((partner) => (
+                <Pressable
+                  key={partner.name}
+                  onPress={partner.url ? () => openLink(partner.url!) : undefined}
+                  style={({ pressed }) => [styles.partnerCardWrapper, isTablet && styles.partnerCardTablet, pressed && { opacity: 0.7 }]}
+                >
+                  <ThemedView style={styles.partnerCard} lightColor="#f5f5f7" darkColor="#2c2c2e">
+                    <View style={styles.partnerContent}>
+                      <ThemedText type="defaultSemiBold">{partner.name}</ThemedText>
+                      <ThemedText style={[styles.discountText, { color: tintColor }]}>{partner.discount}</ThemedText>
+                      {partner.address && (
+                        <ThemedText style={styles.addressText}>{partner.address}</ThemedText>
+                      )}
+                    </View>
+                    {partner.url && (
+                      <MaterialCommunityIcons name="open-in-new" size={16} color={tintColor} style={{ marginTop: 2 }} />
+                    )}
+                  </ThemedView>
+                </Pressable>
+              ))}
             </View>
-          </ThemedView>
+          </View>
         </AnimatedCard>
       </ContentContainer></ScrollView>
     </SafeAreaView>
@@ -184,38 +186,43 @@ const styles = StyleSheet.create({
     fontSize: 14,
     opacity: 0.9,
   },
-  partnerRow: {
-    flexDirection: 'row',
-    alignItems: 'center',
+  partnersSection: {
     gap: 12,
-    paddingVertical: 12,
-    borderBottomWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: '#ccc',
+  },
+  partnersGrid: {
+    gap: 8,
+  },
+  partnersGridTablet: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 10,
+  },
+  partnerCardWrapper: {
+    borderRadius: 12,
+    overflow: 'hidden',
+  },
+  partnerCardTablet: {
+    flexBasis: '48%',
+  },
+  partnerCard: {
+    flexDirection: 'row',
+    alignItems: 'flex-start',
+    gap: 10,
+    padding: 14,
+    borderRadius: 12,
   },
   partnerContent: {
     flex: 1,
-    gap: 3,
+    gap: 4,
   },
   discountText: {
     fontSize: 13,
-    opacity: 0.75,
+    fontWeight: '500',
     lineHeight: 18,
   },
   addressText: {
     fontSize: 12,
     opacity: 0.5,
-  },
-  partnersGridTablet: {
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    gap: 8,
-  },
-  partnerRowTablet: {
-    flexBasis: '48%',
-    borderBottomWidth: 0,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#ccc',
-    borderRadius: 8,
-    padding: 8,
+    marginTop: 2,
   },
 });
