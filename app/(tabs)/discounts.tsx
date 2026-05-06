@@ -10,7 +10,7 @@ import { useResponsive } from '@/hooks/use-responsive';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
 import React, { useState } from 'react';
-import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { Linking, Pressable, ScrollView, StyleSheet, View, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 export default function DiscountsScreen() {
@@ -66,7 +66,7 @@ export default function DiscountsScreen() {
           <ThemedView style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
             <ThemedText type="subtitle">Kategorie zniżek</ThemedText>
             <ThemedText style={styles.hint}>Dotknij kategorię, aby filtrować listę.</ThemedText>
-            <View style={styles.grid}>
+            <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={styles.chipsRow}>
               {DISCOUNT_CATEGORIES.map((category) => {
                 const active = selectedCategory === category.name;
                 return (
@@ -74,22 +74,24 @@ export default function DiscountsScreen() {
                     key={category.name}
                     onPress={() => toggleCategory(category.name)}
                     style={[
-                      styles.categoryItem,
-                      active && { backgroundColor: tintColor + '22', borderRadius: 12 },
+                      styles.chip,
+                      active
+                        ? { backgroundColor: tintColor, borderColor: tintColor }
+                        : { backgroundColor: 'transparent', borderColor: colorScheme === 'dark' ? '#444' : '#d0d0d0' },
                     ]}
                   >
                     <IconSymbol
                       name={category.icon as any}
-                      size={28}
-                      color={active ? tintColor : colorScheme === 'dark' ? '#9BA1A6' : '#687076'}
+                      size={16}
+                      color={active ? '#fff' : colorScheme === 'dark' ? '#9BA1A6' : '#687076'}
                     />
-                    <ThemedText style={[styles.categoryText, active && { color: tintColor, fontWeight: '600' }]}>
+                    <Text style={[styles.chipText, { color: active ? '#fff' : colorScheme === 'dark' ? '#ECEDEE' : '#11181C' }]}>
                       {category.name}
-                    </ThemedText>
+                    </Text>
                   </Pressable>
                 );
               })}
-            </View>
+            </ScrollView>
           </ThemedView>
         </AnimatedCard>
 
@@ -170,23 +172,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     fontSize: 16,
   },
-  grid: {
+  chipsRow: {
     flexDirection: 'row',
-    flexWrap: 'wrap',
-    justifyContent: 'space-between',
-    gap: 20,
-    marginTop: 8,
-  },
-  categoryItem: {
-    alignItems: 'center',
     gap: 8,
-    padding: 8,
-    minWidth: 80,
+    paddingVertical: 4,
   },
-  categoryText: {
-    textAlign: 'center',
+  chip: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    paddingHorizontal: 14,
+    paddingVertical: 8,
+    borderRadius: 20,
+    borderWidth: 1.5,
+  },
+  chipText: {
     fontSize: 14,
-    opacity: 0.9,
+    fontWeight: '500',
   },
   partnersSection: {
     gap: 12,

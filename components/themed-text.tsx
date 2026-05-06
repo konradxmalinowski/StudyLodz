@@ -5,7 +5,7 @@ import { useThemeColor } from '@/hooks/use-theme-color';
 export type ThemedTextProps = TextProps & {
   lightColor?: string;
   darkColor?: string;
-  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link';
+  type?: 'default' | 'title' | 'defaultSemiBold' | 'subtitle' | 'link' | 'caption' | 'overline';
 };
 
 export function ThemedText({
@@ -25,6 +25,8 @@ export function ThemedText({
   if (type === 'defaultSemiBold') baseStyles.push(styles.defaultSemiBold);
   if (type === 'subtitle') baseStyles.push(styles.subtitle);
   if (type === 'link') baseStyles.push(styles.link);
+  if (type === 'caption') baseStyles.push(styles.caption);
+  if (type === 'overline') baseStyles.push(styles.overline);
 
   const flattened = StyleSheet.flatten([baseStyles, style]);
 
@@ -54,5 +56,18 @@ const styles = StyleSheet.create({
     lineHeight: 30,
     fontSize: 16,
     color: '#0a7ea4',
+  },
+  caption: {
+    fontSize: 12,
+    lineHeight: 16,
+    opacity: 0.55,
+  },
+  overline: {
+    fontSize: 11,
+    lineHeight: 14,
+    fontWeight: '600',
+    letterSpacing: 0.8,
+    textTransform: 'uppercase',
+    opacity: 0.5,
   },
 });

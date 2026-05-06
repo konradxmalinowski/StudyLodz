@@ -40,6 +40,7 @@ const MAPPING = {
   'building.2.crop.circle': 'apartment',
   'tree.circle': 'park',
   'tram.circle': 'tram',
+  magnifyingglass: 'search',
 } as IconMapping;
 
 /**

@@ -97,7 +97,9 @@ export default function ScholarshipScreen() {
                   <ThemedText type="defaultSemiBold">{item.title}</ThemedText>
                   <ThemedText style={styles.cardDescription}>{item.description}</ThemedText>
                   {item.amount && (
-                    <ThemedText style={[styles.amount, { color: tintColor }]}>{item.amount}</ThemedText>
+                    <View style={[styles.amountBadge, { backgroundColor: tintColor + '1A' }]}>
+                      <ThemedText style={[styles.amount, { color: tintColor }]}>{item.amount}</ThemedText>
+                    </View>
                   )}
                 </View>
                 {item.url && <MaterialCommunityIcons name="chevron-right" size={24} color={iconColor} />}
@@ -174,9 +176,16 @@ const styles = StyleSheet.create({
     fontSize: 14,
     lineHeight: 18,
   },
+  amountBadge: {
+    alignSelf: 'flex-start',
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    borderRadius: 20,
+    marginTop: 4,
+  },
   amount: {
-    fontSize: 13,
-    fontWeight: '600',
-    marginTop: 2,
+    fontSize: 12,
+    fontWeight: '700',
+    letterSpacing: 0.2,
   },
 });

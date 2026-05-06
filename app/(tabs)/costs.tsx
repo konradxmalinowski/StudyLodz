@@ -127,15 +127,15 @@ export default function CostsScreen() {
           paddingLeft="15"
         />
 
-        <View style={isTablet ? [styles.categoriesGridTablet] : undefined}>
+        <View style={isTablet ? [styles.categoriesGridTablet] : styles.categoriesGrid}>
         {CATEGORIES.map((category) => (
-          <ThemedView key={category.key} style={[styles.categoryContainer, isTablet && styles.categoryContainerTablet]} lightColor="#f9f9f9" darkColor="#1c1c1e">
+          <ThemedView key={category.key} style={[styles.categoryContainer, isTablet && styles.categoryContainerTablet, { borderLeftColor: category.color }]} lightColor="#f9f9f9" darkColor="#1c1c1e">
             <View style={styles.categoryHeader}>
               <View style={styles.categoryTitle}>
-                <MaterialCommunityIcons name={category.icon as any} size={24} color={iconColor} />
+                <MaterialCommunityIcons name={category.icon as any} size={24} color={category.color} />
                 <ThemedText type="subtitle">{category.name}</ThemedText>
               </View>
-              <ThemedText type="defaultSemiBold" style={{ color: tintColor }}>{costs[category.key]} PLN</ThemedText>
+              <ThemedText type="defaultSemiBold" style={{ color: category.color }}>{costs[category.key]} PLN</ThemedText>
             </View>
             <ThemedText style={styles.categoryDescription}>{category.description}</ThemedText>
             <Slider
@@ -145,9 +145,9 @@ export default function CostsScreen() {
               step={category.step}
               value={costs[category.key]}
               onValueChange={(value) => handleValueChange(category.key, value)}
-              minimumTrackTintColor={tintColor}
+              minimumTrackTintColor={category.color}
               maximumTrackTintColor={colorScheme === 'dark' ? '#444' : '#ccc'}
-              thumbTintColor={tintColor}
+              thumbTintColor={category.color}
             />
           </ThemedView>
         ))}
@@ -172,6 +172,9 @@ const styles = StyleSheet.create({
   scroll: {
     flexGrow: 1,
   },
+  categoriesGrid: {
+    gap: 12,
+  },
   categoriesGridTablet: {
     flexDirection: 'row',
     flexWrap: 'wrap',
@@ -190,8 +193,9 @@ const styles = StyleSheet.create({
   },
   categoryContainer: {
     padding: 20,
-    borderRadius: 20,
+    borderRadius: 16,
     gap: 8,
+    borderLeftWidth: 4,
   },
   categoryHeader: {
     flexDirection: 'row',

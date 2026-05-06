@@ -10,7 +10,7 @@ import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useResponsive } from '@/hooks/use-responsive';
 import { useRouter } from 'expo-router';
 import React, { useState, useEffect } from 'react';
-import { ScrollView, StyleSheet, View, LayoutAnimation, Pressable, TextInput } from 'react-native';
+import { ScrollView, StyleSheet, View, LayoutAnimation, Pressable, TextInput, Text } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import * as Haptics from 'expo-haptics';
 
@@ -59,13 +59,16 @@ export default function StudyScreen() {
               Łódź to jeden z najważniejszych ośrodków akademickich w kraju, goszczący 19 uczelni i ponad 75 tysięcy
               studentów.
             </ThemedText>
-            <TextInput
-              style={[styles.searchBar, { color: textColor, borderColor: borderColor }]}
-              placeholder="Szukaj uczelni..."
-              value={searchQuery}
-              onChangeText={setSearchQuery}
-              placeholderTextColor={colorScheme === 'dark' ? '#999' : '#666'}
-            />
+            <View style={[styles.searchWrapper, { borderColor: borderColor, backgroundColor: colorScheme === 'dark' ? '#2c2c2e' : '#f2f2f7' }]}>
+              <IconSymbol name="magnifyingglass" size={16} color={colorScheme === 'dark' ? '#666' : '#999'} />
+              <TextInput
+                style={[styles.searchBar, { color: textColor }]}
+                placeholder="Szukaj uczelni..."
+                value={searchQuery}
+                onChangeText={setSearchQuery}
+                placeholderTextColor={colorScheme === 'dark' ? '#666' : '#999'}
+              />
+            </View>
             <View style={styles.filterContainer}>
               <View style={styles.switchContainer}>
                 <ThemedText>Publiczne</ThemedText>
@@ -81,10 +84,17 @@ export default function StudyScreen() {
                 <Pressable key={uni.title} onPress={() => handlePress(uni)} style={isTablet && styles.universityCardTablet}>
                   <ThemedView style={styles.universityCard} lightColor="#f9f9f9" darkColor="#1c1c1e">
                     <View style={styles.universityInfo}>
-                      <ThemedText type="defaultSemiBold">{uni.title}</ThemedText>
-                      <ThemedText style={{ opacity: 0.8 }}>{uni.content}</ThemedText>
+                      <View style={styles.universityTitleRow}>
+                        <ThemedText type="defaultSemiBold" style={{ flex: 1 }}>{uni.title}</ThemedText>
+                        <View style={[styles.typeBadge, { backgroundColor: uni.type === 'artystyczna' ? '#FF6B6B22' : tintColor + '1A' }]}>
+                          <Text style={[styles.typeBadgeText, { color: uni.type === 'artystyczna' ? '#E05050' : tintColor }]}>
+                            {uni.type === 'artystyczna' ? 'Artystyczna' : 'Publiczna'}
+                          </Text>
+                        </View>
+                      </View>
+                      <ThemedText style={{ opacity: 0.7, fontSize: 14 }}>{uni.content}</ThemedText>
                     </View>
-                    <IconSymbol name="chevron.right" size={24} color={tintColor} />
+                    <IconSymbol name="chevron.right" size={20} color={colorScheme === 'dark' ? '#555' : '#ccc'} />
                   </ThemedView>
                 </Pressable>
               ))}
@@ -159,12 +169,36 @@ const styles = StyleSheet.create({
     gap: 4,
     paddingRight: 8,
   },
-  searchBar: {
-    height: 40,
-    borderWidth: 1,
-    borderRadius: 8,
+  searchWrapper: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    height: 44,
+    borderRadius: 12,
     paddingHorizontal: 12,
     marginTop: 16,
+    borderWidth: 1,
+  },
+  searchBar: {
+    flex: 1,
+    height: '100%',
+    fontSize: 16,
+  },
+  universityTitleRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+    flexWrap: 'wrap',
+  },
+  typeBadge: {
+    paddingHorizontal: 8,
+    paddingVertical: 3,
+    borderRadius: 20,
+  },
+  typeBadgeText: {
+    fontSize: 11,
+    fontWeight: '600',
+    letterSpacing: 0.3,
   },
   filterContainer: {
     flexDirection: 'row',

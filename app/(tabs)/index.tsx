@@ -7,8 +7,6 @@ import ParallaxScrollView from '@/components/parallax-scroll-view';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useResponsive } from '@/hooks/use-responsive';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
@@ -25,6 +23,7 @@ const SECTIONS = [
     link: '/study',
     buttonText: 'Otwórz przewodnik',
     icon: 'book.fill',
+    accentColor: '#4E56C0',
   },
   {
     title: 'Odkryj Łódź',
@@ -32,12 +31,11 @@ const SECTIONS = [
     link: '/lodz',
     buttonText: 'Poznaj miasto',
     icon: 'building.2.fill',
+    accentColor: '#2E8B57',
   },
 ];
 
 export default function HomeScreen() {
-  const colorScheme = useColorScheme();
-  const tintColor = Colors[colorScheme ?? 'light'].tint;
   const { isTablet } = useResponsive();
   const imageOpacity = useSharedValue(0);
   const titleTranslateY = useSharedValue(20);
@@ -82,20 +80,20 @@ export default function HomeScreen() {
           </ThemedView>
         </AnimatedCard>
 
-        <View style={isTablet ? styles.sectionsRow : undefined}>
+        <View style={isTablet ? styles.sectionsRow : styles.sectionsCol}>
           {SECTIONS.map((section, index) => (
             <AnimatedCard key={section.title} delay={(index + 1) * 100} style={isTablet ? styles.sectionCardTablet : undefined}>
-              <ThemedView style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
-                <View style={styles.cardHeader}>
-                  <IconSymbol name={section.icon as any} size={32} color={tintColor} />
-                  <ThemedText type="subtitle" style={{ flexShrink: 1, fontSize: 22 }}>{section.title}</ThemedText>
+              <ThemedView style={[styles.card, { borderTopColor: section.accentColor }]} lightColor="#f9f9f9" darkColor="#1c1c1e">
+                <View style={[styles.iconWrap, { backgroundColor: section.accentColor + '18' }]}>
+                  <IconSymbol name={section.icon as any} size={28} color={section.accentColor} />
                 </View>
+                <ThemedText type="subtitle" style={{ fontSize: 20 }}>{section.title}</ThemedText>
                 <ThemedText style={styles.cardText}>{section.description}</ThemedText>
                 <Pressable onPress={() => handlePress(section.link)} style={styles.link}>
-                  <ThemedView style={[styles.cta, { backgroundColor: tintColor }]} lightColor="#4E56C0" darkColor="#4E56C0">
+                  <View style={[styles.cta, { backgroundColor: section.accentColor }]}>
                     <ThemedText style={styles.ctaText}>{section.buttonText}</ThemedText>
-                    <MaterialCommunityIcons name="arrow-right" size={20} color="#fff" />
-                  </ThemedView>
+                    <MaterialCommunityIcons name="arrow-right" size={18} color="#fff" />
+                  </View>
                 </Pressable>
               </ThemedView>
             </AnimatedCard>
@@ -129,54 +127,58 @@ const styles = StyleSheet.create({
     width: '100%',
     height: '100%',
   },
+  sectionsCol: {
+    gap: 16,
+  },
   sectionsRow: {
     flexDirection: 'row',
-    gap: 24,
+    gap: 20,
     alignItems: 'stretch',
-    flexWrap: 'wrap'
+    flexWrap: 'wrap',
   },
   sectionCardTablet: {
     flex: 1,
   },
   link: {
-    marginTop: 16,
-    padding: 10,
+    marginTop: 8,
+  },
+  iconWrap: {
+    width: 52,
+    height: 52,
+    borderRadius: 14,
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   cta: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 12,
-    paddingVertical: 12,
-    paddingHorizontal: 20,
-    borderRadius: 12,
+    gap: 8,
+    paddingVertical: 11,
+    paddingHorizontal: 18,
+    borderRadius: 10,
     alignSelf: 'flex-start',
   },
   ctaText: {
     color: '#fff',
-    fontWeight: 'bold',
-    fontSize: 16,
+    fontWeight: '600',
+    fontSize: 15,
   },
   card: {
-    padding: 30,
-    borderRadius: 20,
-    gap: 20,
+    padding: 24,
+    borderRadius: 18,
+    gap: 14,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 8,
-    elevation: 5,
+    shadowOpacity: 0.08,
+    shadowRadius: 6,
+    elevation: 4,
     flexDirection: 'column',
-    justifyContent: 'space-between',
     flex: 1,
-  },
-  cardHeader: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 16,
+    borderTopWidth: 3,
   },
   cardText: {
-    opacity: 0.85,
-    lineHeight: 24,
-    fontSize: 16,
+    opacity: 0.75,
+    lineHeight: 22,
+    fontSize: 15,
   },
 });

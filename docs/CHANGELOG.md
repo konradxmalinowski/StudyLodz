@@ -2,6 +2,46 @@
 
 ---
 
+## UI Polish — Visual Hierarchy & Authenticity (2026)
+
+A targeted pass to reduce the generic "AI-generated" feel of the UI without changing app structure or functionality. Every change is grounded in a specific diagnosis.
+
+### Typography
+
+- Added `caption` type to `ThemedText` — `fontSize: 12, lineHeight: 16, opacity: 0.55`. Fills the gap between `default` (16 px) and icon-level labels.
+- Added `overline` type — `fontSize: 11, fontWeight: 600, letterSpacing: 0.8, textTransform: uppercase`. Available for future section labels.
+
+### Home screen (`index.tsx`)
+
+- Section cards now carry individual `accentColor` values (`#4E56C0` for study, `#2E8B57` for city). Each card renders a `borderTopWidth: 3` stripe in its accent color and a rounded icon container (`backgroundColor: accentColor + '18'`).
+- Removed the catch-all `tintColor` from CTA buttons — each button now uses its section's own accent color.
+- Tightened card padding (30 → 24 px), gap (20 → 14 px), and font size (16 → 15 px) for a denser, less padded-out look.
+
+### Cost of Living calculator (`costs.tsx`)
+
+- Each category card now uses its own data color (`#FF6384`, `#36A2EB`, `#FFCE56`, `#4BC0C0`) for: icon, value text, slider track, and thumb. Previously these colors were only used in the pie chart.
+- Added `borderLeftWidth: 4` with the category color to each card — visually ties the card to its chart segment.
+
+### Scholarship screen (`scholarship.tsx`)
+
+- Scholarship amounts (e.g., `600–1200 PLN/mies.`) are now wrapped in a pill badge: `borderRadius: 20`, `backgroundColor: tintColor + '1A'`, `paddingHorizontal: 10`. Previously just colored text.
+
+### Discounts screen (`discounts.tsx`)
+
+- Replaced the `flexWrap` grid of icon+text category selectors with a horizontal `ScrollView` of pill chips. Active chip: solid `tintColor` background, white icon/text. Inactive chip: transparent background, `borderColor` border. More native, less settings-page.
+
+### University guide (`study.tsx`)
+
+- Search bar now has a magnifying glass icon inside a rounded container (`borderRadius: 12`) instead of a plain bordered `TextInput`.
+- Each university card now shows a small type badge (`Publiczna` / `Artystyczna`) beside the university name. Artystyczna badge uses a red tint (`#E05050`) to distinguish from the default indigo.
+- Chevron icon softened from `tintColor` to `#ccc`/`#555` — was competing with the badge for attention.
+
+### About Łódź (`lodz.tsx`)
+
+- TIDBITS section ("Odkryj miasto") now uses a numbered style: a large `01`–`04` number (`fontWeight: 800, opacity: 0.1`) sits above the title, replacing the SF Symbol icon. Visually distinguishes this section from the adjacent BENEFITS grid which keeps the icon+title layout.
+
+---
+
 ## Tablet Layout & Map Fixes (2026)
 
 ### Tablet Responsive Layout

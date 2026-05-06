@@ -207,12 +207,10 @@ export default function LodzScreen() {
                 Odkryj miasto
                 </ThemedText>
                 <View style={styles.grid}>
-                {TIDBITS.map((tidbit) => (
-                    <ThemedView key={tidbit.title} style={[styles.card, isTablet && styles.cardTablet]} lightColor="#f9f9f9" darkColor="#1c1c1e">
-                    <View style={styles.cardHeader}>
-                        <IconSymbol name={tidbit.icon as any} size={24} color={tintColor} />
-                        <ThemedText type="defaultSemiBold" style={{ flexShrink: 1 }}>{tidbit.title}</ThemedText>
-                    </View>
+                {TIDBITS.map((tidbit, index) => (
+                    <ThemedView key={tidbit.title} style={[styles.tidbitCard, isTablet && styles.cardTablet]} lightColor="#f9f9f9" darkColor="#1c1c1e">
+                    <ThemedText style={styles.tidbitNumber}>{String(index + 1).padStart(2, '0')}</ThemedText>
+                    <ThemedText type="defaultSemiBold" style={styles.tidbitTitle}>{tidbit.title}</ThemedText>
                     <ThemedText style={styles.cardText}>{tidbit.description}</ThemedText>
                     </ThemedView>
                 ))}
@@ -341,5 +339,26 @@ const styles = StyleSheet.create({
       width: 40,
       height: 40,
       borderRadius: 8,
+    },
+    tidbitCard: {
+      padding: 20,
+      borderRadius: 20,
+      gap: 6,
+      shadowColor: '#000',
+      shadowOffset: { width: 0, height: 2 },
+      shadowOpacity: 0.08,
+      shadowRadius: 6,
+      elevation: 3,
+      flex: 1,
+      minWidth: 260,
+    },
+    tidbitNumber: {
+      fontSize: 28,
+      fontWeight: '800',
+      opacity: 0.1,
+      lineHeight: 32,
+    },
+    tidbitTitle: {
+      marginTop: -4,
     },
   });
