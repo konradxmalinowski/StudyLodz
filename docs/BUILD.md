@@ -277,36 +277,82 @@ Uruchamia równolegle buildy iOS i Android. Oba ukończone mniej więcej w tym s
 
 ---
 
-## 9. Profile buildów
+## 9. APK na własny telefon — bez Google Play
 
-W `eas.json` są trzy profile:
+Jeśli chcesz zainstalować aplikację **tylko na swoim Androidzie** bez żadnych sklepów, kont Google Play ani publikacji — użyj profilu `preview`. Tworzy on plik `.apk` do bezpośredniej instalacji (sideloading).
 
-| Profil | Do czego | Dystrybucja |
-|---|---|---|
-| `development` | lokalny development z Expo Dev Client | internal |
-| `preview` | testowanie przed releasem (bez App Store/Play) | internal (.ipa / .apk) |
-| `production` | build produkcyjny do sklepów | store (.ipa / .aab) |
+Profil jest już skonfigurowany w `eas.json`:
 
-### Preview build — instalacja bez sklepu
-
-Możesz zainstalować `preview` bezpośrednio na urządzeniu (bez App Store):
-
-```bash
-eas build --platform ios --profile preview
+```json
+"preview": {
+  "distribution": "internal",
+  "android": {
+    "buildType": "apk"
+  }
+}
 ```
 
-Na iOS wymaga **provisioning profile z urządzeniem testowym** (ad-hoc) — dodaj UDID urządzenia w Apple Developer Portal. EAS przeprowadzi przez ten krok.
-
-Na Androidzie `preview` tworzy `.apk` do bezpośredniej instalacji:
+### 9.1 Zrób build
 
 ```bash
 eas build --platform android --profile preview
-# pobierz .apk z linku i wyślij na telefon
 ```
+
+Nie wymaga konta Google Play. EAS używa tego samego keystor'a co production — build jest w pełni podpisany.
+
+**Czas: ok. 10–20 minut** (free tier ma kolejkę).
+
+Po ukończeniu dostaniesz link, np.:
+```
+https://expo.dev/accounts/konradxmalinowski/projects/StudiujWLodzi/builds/xxxx
+```
+
+### 9.2 Pobierz APK
+
+Na stronie buildu kliknij **Download** — pobierz plik `application-preview.apk`.
+
+Możesz też od razu pobrać link do APK z terminala:
+
+```bash
+eas build:list --platform android --limit 1
+```
+
+### 9.3 Zainstaluj na telefonie
+
+**Metoda A — przez kabel USB:**
+1. Podłącz telefon do komputera
+2. Skopiuj `.apk` na telefon (przeciągnij do folderu `Download`)
+3. Na telefonie otwórz Menadżer plików → znajdź plik → dotknij
+
+**Metoda B — bezprzewodowo:**
+1. Prześlij `.apk` na telefon przez Google Drive / WhatsApp / email
+2. Otwórz plik na telefonie
+
+**Zezwolenie na instalację z nieznanych źródeł** (wymagane przy pierwszej instalacji):
+
+- Android 8+: Ustawienia → Aplikacje → (nazwa przeglądarki/menadżera plików) → Zainstaluj nieznane aplikacje → Zezwól
+- Starszy Android: Ustawienia → Bezpieczeństwo → Nieznane źródła → Włącz
+
+Dotknij `.apk` → **Zainstaluj** → **Otwórz**.
+
+### 9.4 Aktualizacja APK
+
+Żeby zainstalować nową wersję, wystarczy zrobić nowy build i zainstalować nowy `.apk` na tym samym telefonie — Android nadpisze starą wersję zachowując dane aplikacji (keystore jest ten sam).
 
 ---
 
-## 10. Śledzenie buildów
+## 10. Profile buildów — podsumowanie
+
+| Profil | Platform | Format | Do czego |
+|---|---|---|---|
+| `development` | iOS / Android | internal | lokalny development z Expo Dev Client |
+| `preview` | Android | `.apk` | instalacja na własny telefon, testowanie |
+| `production` | iOS | `.ipa` | App Store |
+| `production` | Android | `.aab` | Google Play |
+
+---
+
+## 11. Śledzenie buildów
 
 Wszystkie buildy widoczne na:
 ```
@@ -317,7 +363,7 @@ Logi w czasie rzeczywistym dostępne po kliknięciu w konkretny build.
 
 ---
 
-## 11. Aktualizacja aplikacji
+## 12. Aktualizacja aplikacji
 
 Przy każdej nowej wersji:
 
@@ -333,7 +379,7 @@ eas submit --platform all --latest
 
 ---
 
-## 12. Rozwiązywanie problemów
+## 13. Rozwiązywanie problemów
 
 **`Distribution Certificate is not validated for non-interactive builds`**
 Uruchom bez flagi `--non-interactive` — EAS musi interaktywnie potwierdzić certyfikat Apple.
@@ -366,12 +412,15 @@ cd StudiujWLodzi && npm install
 # Logowanie
 eas login
 
-# Build
+# APK na własny telefon (bez sklepu)
+eas build --platform android --profile preview
+
+# Build produkcyjny
 eas build --platform ios --profile production      # tylko iOS
 eas build --platform android --profile production  # tylko Android
 eas build --platform all --profile production      # obie naraz
 
-# Submit
+# Submit do sklepów
 eas submit --platform ios --latest
 eas submit --platform android --latest
 eas submit --platform all --latest
