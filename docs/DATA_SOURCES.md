@@ -29,9 +29,7 @@ Authoritative national registry: https://polon.nauka.gov.pl (MEiN, updated each 
 
 ## campus map pins — `components/study-map.tsx`
 
-**Current state (before fix):** Only 2 out of 6 universities were pinned — Politechnika Łódzka and Uniwersytet Łódzki.
-
-**Fixed:** All 6 universities are now pinned with GPS coordinates sourced from OpenStreetMap.
+**Current state:** All 6 universities are pinned. The inline preview uses CARTO Voyager tiles (`basemaps.cartocdn.com`); tapping "Otwórz mapę" opens an identical full-screen interactive map in `app/modal.tsx`. OSM's own tile servers (`tile.openstreetmap.org`) were replaced because they block requests from mobile WebViews.
 
 **Coordinates used:**
 
