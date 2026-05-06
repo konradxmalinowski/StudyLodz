@@ -1,15 +1,16 @@
 
+import { AnimatedCard } from '@/components/animated-card';
 import { ContentContainer } from '@/components/content-container';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { Colors } from '@/constants/theme';
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { useResponsive } from '@/hooks/use-responsive';
-import React from 'react';
-import { ScrollView, StyleSheet, View, Linking, Pressable } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
-import { LinearGradient } from 'expo-linear-gradient';
+import * as Haptics from 'expo-haptics';
+import React from 'react';
+import { Linking, Pressable, ScrollView, StyleSheet, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const SCHOLARSHIPS = [
   {
@@ -58,7 +59,7 @@ const STUDENT_LIFE = [
     description: 'Łódź tętni życiem nocnym. Wiele klubów oferuje zniżki dla studentów i organizuje imprezy tematyczne.',
     icon: 'music-note-outline',
   },
-    {
+  {
     title: 'Wydarzenia sportowe',
     description: 'Uniwersytety oferują dostęp do nowoczesnych obiektów sportowych i organizują liczne zawody międzyuczelniane.',
     icon: 'basketball',
@@ -68,60 +69,74 @@ const STUDENT_LIFE = [
 export default function ScholarshipScreen() {
   const colorScheme = useColorScheme();
   const tintColor = Colors[colorScheme ?? 'light'].tint;
-  const iconColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
-  const gradientColors: [string, string] = colorScheme === 'dark' ? ['#1c1c1e', '#2c2c2e'] : ['#f9f9f9', '#e9e9e9'];
-  const { isTablet, padding } = useResponsive();
+  const iconColor = colorScheme === 'dark' ? Colors.dark.icon : Colors.light.icon;
+  const { isTablet } = useResponsive();
 
   const openLink = (url: string) => {
+    Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     Linking.openURL(url).catch(() => {});
   };
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
-      <ScrollView contentContainerStyle={styles.scroll}><ContentContainer>
-        <View style={styles.header}>
-          <ThemedText type="title">Stypendia i życie studenckie</ThemedText>
-          <ThemedText style={styles.subtitle}>
-            Studiowanie to nie tylko nauka! Zobacz, jakie wsparcie finansowe możesz uzyskać i jak wygląda życie studenckie w Łodzi.
-          </ThemedText>
-        </View>
+      <ScrollView contentContainerStyle={styles.scroll}>
+        <ContentContainer>
+          <AnimatedCard delay={0}>
+            <ThemedView style={styles.header}>
+              <ThemedText type="title">Stypendia i życie studenckie</ThemedText>
+              <ThemedText type="subtitleParagraph">
+                Studiowanie to nie tylko nauka! Zobacz, jakie wsparcie finansowe możesz uzyskać i jak wygląda życie studenckie w Łodzi.
+              </ThemedText>
+            </ThemedView>
+          </AnimatedCard>
 
-        <ThemedView style={styles.sectionContainer}>
-          <ThemedText type="subtitle" style={styles.sectionTitle}>Dostępne stypendia</ThemedText>
-          <View style={isTablet ? styles.gridTablet : undefined}>
-          {SCHOLARSHIPS.map((item) => (
-            <Pressable key={item.title} onPress={() => item.url && openLink(item.url)} style={isTablet && styles.gridItemTablet}>
-              <LinearGradient colors={gradientColors} style={styles.card}>
-                <MaterialCommunityIcons name={item.icon as any} size={28} color={tintColor} />
-                <View style={styles.cardContent}>
-                  <ThemedText type="defaultSemiBold">{item.title}</ThemedText>
-                  <ThemedText style={styles.cardDescription}>{item.description}</ThemedText>
-                  {item.amount && (
-                    <View style={[styles.amountBadge, { backgroundColor: tintColor + '1A' }]}>
-                      <ThemedText style={[styles.amount, { color: tintColor }]}>{item.amount}</ThemedText>
-                    </View>
-                  )}
-                </View>
-                {item.url && <MaterialCommunityIcons name="chevron-right" size={24} color={iconColor} />}
-              </LinearGradient>
-            </Pressable>
-          ))}
-          </View>
-        </ThemedView>
-
-        <ThemedView style={styles.sectionContainer}>
-          <ThemedText type="subtitle" style={styles.sectionTitle}>Nie samą nauką student żyje</ThemedText>
-          {STUDENT_LIFE.map((item) => (
-            <LinearGradient key={item.title} colors={gradientColors} style={styles.card}>
-              <MaterialCommunityIcons name={item.icon as any} size={28} color={tintColor} />
-              <View style={styles.cardContent}>
-                <ThemedText type="defaultSemiBold">{item.title}</ThemedText>
-                <ThemedText style={styles.cardDescription}>{item.description}</ThemedText>
+          <AnimatedCard delay={100}>
+            <ThemedView style={styles.sectionContainer}>
+              <ThemedText type="subtitle" style={styles.sectionTitle}>Dostępne stypendia</ThemedText>
+              <View style={isTablet ? styles.gridTablet : styles.grid}>
+                {SCHOLARSHIPS.map((item) => (
+                  <Pressable
+                    key={item.title}
+                    onPress={() => item.url && openLink(item.url)}
+                    style={({ pressed }) => [isTablet && styles.gridItemTablet, pressed && { opacity: 0.75 }]}
+                  >
+                    <ThemedView style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
+                      <MaterialCommunityIcons name={item.icon as any} size={26} color={tintColor} />
+                      <View style={styles.cardContent}>
+                        <ThemedText type="defaultSemiBold">{item.title}</ThemedText>
+                        <ThemedText style={styles.cardDescription}>{item.description}</ThemedText>
+                        {item.amount && (
+                          <View style={[styles.amountBadge, { backgroundColor: tintColor + '1A' }]}>
+                            <ThemedText style={[styles.amount, { color: tintColor }]}>{item.amount}</ThemedText>
+                          </View>
+                        )}
+                      </View>
+                      {item.url && <MaterialCommunityIcons name="chevron-right" size={22} color={iconColor} />}
+                    </ThemedView>
+                  </Pressable>
+                ))}
               </View>
-            </LinearGradient>
-          ))}
-        </ThemedView>
-      </ContentContainer></ScrollView>
+            </ThemedView>
+          </AnimatedCard>
+
+          <AnimatedCard delay={200}>
+            <ThemedView style={styles.sectionContainer}>
+              <ThemedText type="subtitle" style={styles.sectionTitle}>Nie samą nauką student żyje</ThemedText>
+              <View style={styles.grid}>
+                {STUDENT_LIFE.map((item) => (
+                  <ThemedView key={item.title} style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
+                    <MaterialCommunityIcons name={item.icon as any} size={26} color={tintColor} />
+                    <View style={styles.cardContent}>
+                      <ThemedText type="defaultSemiBold">{item.title}</ThemedText>
+                      <ThemedText style={styles.cardDescription}>{item.description}</ThemedText>
+                    </View>
+                  </ThemedView>
+                ))}
+              </View>
+            </ThemedView>
+          </AnimatedCard>
+        </ContentContainer>
+      </ScrollView>
     </SafeAreaView>
   );
 }
@@ -130,40 +145,35 @@ const styles = StyleSheet.create({
   scroll: {
     flexGrow: 1,
   },
+  header: {
+    gap: 8,
+  },
+  sectionContainer: {
+    gap: 12,
+  },
+  sectionTitle: {
+    marginBottom: 4,
+  },
+  grid: {
+    gap: 10,
+  },
   gridTablet: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 16,
+    gap: 12,
   },
   gridItemTablet: {
     flexBasis: '48%',
   },
-  header: {
-    gap: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    opacity: 0.8,
-    lineHeight: 22,
-  },
-  sectionContainer: {
-    gap: 16,
-    padding: 20,
-    borderRadius: 20,
-  },
-  sectionTitle: {
-    marginBottom: 8,
-    marginLeft: 4,
-  },
   card: {
-    padding: 20,
-    borderRadius: 15,
+    padding: 16,
+    borderRadius: 16,
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16,
+    gap: 14,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
-    shadowOpacity: 0.05,
+    shadowOpacity: 0.06,
     shadowRadius: 4,
     elevation: 2,
   },
@@ -174,7 +184,7 @@ const styles = StyleSheet.create({
   cardDescription: {
     opacity: 0.7,
     fontSize: 14,
-    lineHeight: 18,
+    lineHeight: 19,
   },
   amountBadge: {
     alignSelf: 'flex-start',

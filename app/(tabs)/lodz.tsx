@@ -160,7 +160,7 @@ export default function LodzScreen() {
         </ScrollView>
         <ContentContainer>
 
-        <AnimatedCard style={styles.cardContainer}>
+        <AnimatedCard>
           <ThemedView style={styles.section}>
             <ThemedText type="subtitle" style={styles.appleTitle}>
               Dlaczego Łódź?
@@ -174,7 +174,7 @@ export default function LodzScreen() {
           </ThemedView>
         </AnimatedCard>
 
-        <AnimatedCard delay={100} style={styles.cardContainer}>
+        <AnimatedCard delay={100}>
           <ThemedView style={styles.section}>
             <ThemedText type="subtitle" style={styles.appleTitle}>
               Życie studenckie
@@ -201,7 +201,7 @@ export default function LodzScreen() {
           </ThemedView>
         </AnimatedCard>
 
-        <AnimatedCard delay={200} style={styles.cardContainer}>
+        <AnimatedCard delay={200}>
             <ThemedView style={styles.section}>
                 <ThemedText type="subtitle" style={styles.appleTitle}>
                 Odkryj miasto
@@ -218,7 +218,7 @@ export default function LodzScreen() {
             </ThemedView>
         </AnimatedCard>
 
-        <AnimatedCard delay={300} style={styles.cardContainer}>
+        <AnimatedCard delay={300}>
           <ThemedView style={styles.section}>
             <ThemedText type="subtitle" style={styles.appleTitle}>
               Kampusy w sercu miasta
@@ -233,7 +233,7 @@ export default function LodzScreen() {
           </ThemedView>
         </AnimatedCard>
 
-        <AnimatedCard delay={400} style={styles.cardContainer}>
+        <AnimatedCard delay={400}>
           <ThemedView style={styles.section}>
             <ThemedText type="subtitle" style={styles.appleTitle}>
               Gdzie zamieszkać?
@@ -288,9 +288,6 @@ const styles = StyleSheet.create({
       width: 280,
       height: 400,
     },
-    cardContainer: {
-      marginBottom: 20,
-    },
     section: {
       gap: 16,
       padding: 4,
@@ -304,7 +301,7 @@ const styles = StyleSheet.create({
     },
     card: {
       padding: 20,
-      borderRadius: 20,
+      borderRadius: 16,
       gap: 12,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },
@@ -342,7 +339,7 @@ const styles = StyleSheet.create({
     },
     tidbitCard: {
       padding: 20,
-      borderRadius: 20,
+      borderRadius: 16,
       gap: 6,
       shadowColor: '#000',
       shadowOffset: { width: 0, height: 2 },

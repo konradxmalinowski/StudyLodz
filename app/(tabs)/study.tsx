@@ -19,7 +19,7 @@ export default function StudyScreen() {
   const tintColor = Colors[colorScheme ?? 'light'].tint;
   const textColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
   const borderColor = colorScheme === 'dark' ? '#444' : '#ccc';
-  const { isTablet, padding } = useResponsive();
+  const { isTablet } = useResponsive();
 
   const [showPublic, setShowPublic] = useState(true);
   const [showArtistic, setShowArtistic] = useState(true);
@@ -50,6 +50,15 @@ export default function StudyScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <ContentContainer>
+        <AnimatedCard delay={0}>
+          <ThemedView style={styles.screenHeader}>
+            <ThemedText type="title">Uczelnie w Łodzi</ThemedText>
+            <ThemedText type="subtitleParagraph">
+              19 uczelni, ponad 75 tysięcy studentów — znajdź kierunek i miejsce dla siebie.
+            </ThemedText>
+          </ThemedView>
+        </AnimatedCard>
+
         <AnimatedCard delay={200} style={styles.cardContainer}>
           <ThemedView style={styles.section}>
             <ThemedText type="subtitle" style={styles.appleTitle}>
@@ -123,6 +132,9 @@ const styles = StyleSheet.create({
   scroll: {
     flexGrow: 1,
   },
+  screenHeader: {
+    gap: 8,
+  },
   cardContainer: {
     marginBottom: 20,
   },
@@ -156,8 +168,8 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-between',
-    padding: 20,
-    borderRadius: 20,
+    padding: 16,
+    borderRadius: 16,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.1,

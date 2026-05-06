@@ -16,7 +16,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 export default function DiscountsScreen() {
   const colorScheme = useColorScheme();
   const tintColor = Colors[colorScheme ?? 'light'].tint;
-  const { isTablet, padding } = useResponsive();
+  const { isTablet } = useResponsive();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
   const openLink = (url: string) => {
@@ -146,8 +146,8 @@ const styles = StyleSheet.create({
     lineHeight: 22,
   },
   card: {
-    padding: 24,
-    borderRadius: 20,
+    padding: 20,
+    borderRadius: 16,
     gap: 16,
   },
   paragraph: {
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     gap: 10,
   },
   partnerCardWrapper: {
-    borderRadius: 12,
+    borderRadius: 10,
     overflow: 'hidden',
   },
   partnerCardTablet: {
@@ -214,7 +214,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     gap: 10,
     padding: 14,
-    borderRadius: 12,
+    borderRadius: 10,
     flex: 1,
   },
   partnerContent: {

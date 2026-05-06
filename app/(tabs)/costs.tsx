@@ -1,3 +1,4 @@
+import { AnimatedCard } from '@/components/animated-card';
 import { ContentContainer } from '@/components/content-container';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -7,7 +8,6 @@ import { useResponsive } from '@/hooks/use-responsive';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import Slider from '@react-native-community/slider';
 import * as Haptics from 'expo-haptics';
-import { LinearGradient } from 'expo-linear-gradient';
 import React, { useEffect, useState } from 'react';
 import { LayoutAnimation, Pressable, ScrollView, StyleSheet, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -68,8 +68,7 @@ const initialCosts = CATEGORIES.reduce((acc, category) => {
 export default function CostsScreen() {
   const colorScheme = useColorScheme();
   const tintColor = Colors[colorScheme ?? 'light'].tint;
-  const iconColor = colorScheme === 'dark' ? Colors.dark.text : Colors.light.text;
-  const gradientColors: [string, string] = colorScheme === 'dark' ? ['#1c1c1e', '#2c2c2e'] : ['#f9f9f9', '#e9e9e9'];
+  const iconColor = colorScheme === 'dark' ? Colors.dark.icon : Colors.light.icon;
   const { isTablet, padding, screenWidth } = useResponsive();
 
   const [costs, setCosts] = useState(initialCosts);
@@ -102,66 +101,74 @@ export default function CostsScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <ContentContainer>
-        <View style={styles.header}>
-          <ThemedText type="title">Kalkulator kosztów życia</ThemedText>
-          <ThemedText style={styles.subtitle}>
-            Oszacuj swoje miesięczne wydatki w Łodzi. Poniższe wartości to rozsądne szacunki, które możesz dostosować do swoich potrzeb.
-          </ThemedText>
-        </View>
+          <AnimatedCard delay={0}>
+            <ThemedView style={styles.header}>
+              <ThemedText type="title">Kalkulator kosztów życia</ThemedText>
+              <ThemedText type="subtitleParagraph">
+                Oszacuj swoje miesięczne wydatki w Łodzi. Poniższe wartości to rozsądne szacunki, które możesz dostosować do swoich potrzeb.
+              </ThemedText>
+            </ThemedView>
+          </AnimatedCard>
 
-        <PieChart
-          data={chartData}
-          width={Math.min(screenWidth - padding * 2, 860)}
-          height={220}
-          chartConfig={{
-            backgroundColor: 'transparent',
-            backgroundGradientFrom: colorScheme === 'dark' ? '#1c1c1e' : '#f9f9f9',
-            backgroundGradientTo: colorScheme === 'dark' ? '#2c2c2e' : '#e9e9e9',
-            color: (opacity = 1) => colorScheme === 'dark' ? `rgba(255, 255, 255, ${opacity})` : `rgba(0, 0, 0, ${opacity})`,
-            propsForLabels: {
-              fontWeight: 'bold',
-            },
-          }}
-          accessor="population"
-          backgroundColor="transparent"
-          paddingLeft="15"
-        />
-
-        <View style={isTablet ? [styles.categoriesGridTablet] : styles.categoriesGrid}>
-        {CATEGORIES.map((category) => (
-          <ThemedView key={category.key} style={[styles.categoryContainer, isTablet && styles.categoryContainerTablet, { borderLeftColor: category.color }]} lightColor="#f9f9f9" darkColor="#1c1c1e">
-            <View style={styles.categoryHeader}>
-              <View style={styles.categoryTitle}>
-                <MaterialCommunityIcons name={category.icon as any} size={24} color={category.color} />
-                <ThemedText type="subtitle">{category.name}</ThemedText>
-              </View>
-              <ThemedText type="defaultSemiBold" style={{ color: category.color }}>{costs[category.key]} PLN</ThemedText>
-            </View>
-            <ThemedText style={styles.categoryDescription}>{category.description}</ThemedText>
-            <Slider
-              style={styles.slider}
-              minimumValue={category.min}
-              maximumValue={category.max}
-              step={category.step}
-              value={costs[category.key]}
-              onValueChange={(value) => handleValueChange(category.key, value)}
-              minimumTrackTintColor={category.color}
-              maximumTrackTintColor={colorScheme === 'dark' ? '#444' : '#ccc'}
-              thumbTintColor={category.color}
+          <AnimatedCard delay={100}>
+            <PieChart
+              data={chartData}
+              width={Math.min(screenWidth - padding * 2 - 32, 860)}
+              height={220}
+              chartConfig={{
+                backgroundColor: 'transparent',
+                backgroundGradientFrom: colorScheme === 'dark' ? '#1c1c1e' : '#f9f9f9',
+                backgroundGradientTo: colorScheme === 'dark' ? '#2c2c2e' : '#e9e9e9',
+                color: (opacity = 1) => colorScheme === 'dark' ? `rgba(255, 255, 255, ${opacity})` : `rgba(0, 0, 0, ${opacity})`,
+                propsForLabels: {
+                  fontWeight: 'bold',
+                },
+              }}
+              accessor="population"
+              backgroundColor="transparent"
+              paddingLeft="15"
             />
-          </ThemedView>
-        ))}
-        </View>
+          </AnimatedCard>
 
-        <LinearGradient colors={gradientColors} style={[styles.totalContainer, { borderLeftColor: tintColor }]}>
-          <View style={styles.totalHeader}>
-            <ThemedText style={styles.totalLabel}>Całkowity koszt miesięczny:</ThemedText>
-            <Pressable onPress={resetCosts}>
-              <MaterialCommunityIcons name="restore" size={24} color={iconColor} />
-            </Pressable>
-          </View>
-          <ThemedText style={[styles.totalValue, { color: tintColor }]}>{totalCost} PLN</ThemedText>
-        </LinearGradient>
+          <AnimatedCard delay={200}>
+            <View style={isTablet ? styles.categoriesGridTablet : styles.categoriesGrid}>
+              {CATEGORIES.map((category) => (
+                <ThemedView key={category.key} style={[styles.categoryContainer, isTablet && styles.categoryContainerTablet, { borderLeftColor: category.color }]} lightColor="#f9f9f9" darkColor="#1c1c1e">
+                  <View style={styles.categoryHeader}>
+                    <View style={styles.categoryTitle}>
+                      <MaterialCommunityIcons name={category.icon as any} size={24} color={category.color} />
+                      <ThemedText type="subtitle">{category.name}</ThemedText>
+                    </View>
+                    <ThemedText type="defaultSemiBold" style={{ color: category.color }}>{costs[category.key]} PLN</ThemedText>
+                  </View>
+                  <ThemedText style={styles.categoryDescription}>{category.description}</ThemedText>
+                  <Slider
+                    style={styles.slider}
+                    minimumValue={category.min}
+                    maximumValue={category.max}
+                    step={category.step}
+                    value={costs[category.key]}
+                    onValueChange={(value) => handleValueChange(category.key, value)}
+                    minimumTrackTintColor={category.color}
+                    maximumTrackTintColor={colorScheme === 'dark' ? '#444' : '#ccc'}
+                    thumbTintColor={category.color}
+                  />
+                </ThemedView>
+              ))}
+            </View>
+          </AnimatedCard>
+
+          <AnimatedCard delay={300}>
+            <ThemedView style={[styles.totalContainer, { borderLeftColor: tintColor }]} lightColor="#f0f0f5" darkColor="#1c1c1e">
+              <View style={styles.totalHeader}>
+                <ThemedText style={styles.totalLabel}>Całkowity koszt miesięczny:</ThemedText>
+                <Pressable onPress={resetCosts}>
+                  <MaterialCommunityIcons name="restore" size={24} color={iconColor} />
+                </Pressable>
+              </View>
+              <ThemedText style={[styles.totalValue, { color: tintColor }]}>{totalCost} PLN</ThemedText>
+            </ThemedView>
+          </AnimatedCard>
         </ContentContainer>
       </ScrollView>
     </SafeAreaView>
@@ -185,11 +192,6 @@ const styles = StyleSheet.create({
   },
   header: {
     gap: 8,
-  },
-  subtitle: {
-    fontSize: 16,
-    opacity: 0.8,
-    lineHeight: 22,
   },
   categoryContainer: {
     padding: 20,
@@ -219,7 +221,7 @@ const styles = StyleSheet.create({
   },
   totalContainer: {
     padding: 24,
-    borderRadius: 20,
+    borderRadius: 16,
     borderLeftWidth: 5,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },

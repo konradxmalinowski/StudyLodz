@@ -2,6 +2,55 @@
 
 ---
 
+## UI Unification — Consistent Structure & Animations (2026)
+
+Audit-driven pass to eliminate structural inconsistencies across all six tab screens. No new features; only parity fixes.
+
+### Animations
+
+- `scholarship.tsx` and `costs.tsx` had no entrance animations — every other screen used `AnimatedCard`. Both screens now wrap their sections in staggered `AnimatedCard` blocks (`delay: 0 / 100 / 200 / 300 ms`).
+
+### LinearGradient removal
+
+- `scholarship.tsx` used `LinearGradient` for list cards while all other screens used `ThemedView`. Replaced with `ThemedView lightColor="#f9f9f9" darkColor="#1c1c1e"`. `LinearGradient` import removed.
+- `costs.tsx` total container replaced from `LinearGradient` to `ThemedView lightColor="#f0f0f5" darkColor="#1c1c1e"`. The left-border accent already differentiates it; gradient added nothing.
+
+### Screen intro header
+
+- `study.tsx` was the only tab screen without a title + subtitle header (it jumped straight into content). Added `AnimatedCard delay={0}` with title "Uczelnie w Łodzi" and a short subtitle paragraph.
+
+### Typography token
+
+- Added `subtitleParagraph` type to `ThemedText` — `{ fontSize: 16, lineHeight: 22, opacity: 0.75 }`. Replaced copy-pasted `styles.subtitle` in `scholarship.tsx`, `costs.tsx`, and `discounts.tsx`.
+
+### Spacing
+
+- `lodz.tsx` `AnimatedCards` had `style={cardContainer}` with `marginBottom: 20`. `ContentContainer` already applies `gap: 24` between children, so this created irregular 44 px gaps. Removed `marginBottom` from all `AnimatedCard` usages in `lodz.tsx` and the dead `cardContainer` style.
+
+### Border-radius standardisation
+
+All card-level elements now use `borderRadius: 16`. Before this change values were: 15, 16, 18, 20 depending on the screen.
+
+| File | Before | After |
+|---|---|---|
+| `index.tsx` card | 18 | 16 |
+| `lodz.tsx` card, tidbitCard | 20 | 16 |
+| `study.tsx` universityCard | 20 | 16 |
+| `discounts.tsx` card, partnerCard, partnerCardWrapper | 20/12 | 16/10 |
+| `scholarship.tsx` card | 15 | 16 |
+
+### Lint
+
+- Removed unused `padding` destructure from `discounts.tsx` and `study.tsx` `useResponsive()` calls.
+- Removed unused `gradientColors` from `costs.tsx`.
+- `iconColor` in `scholarship.tsx` and `costs.tsx` now uses `Colors.dark.icon` / `Colors.light.icon` instead of `Colors.dark.text`.
+
+### PieChart overflow fix
+
+- Wrapping `PieChart` in `AnimatedCard` (which has `padding: 16`) reduced the available width by 32 px. Updated width calculation: `screenWidth - padding * 2 - 32` to account for the wrapper padding.
+
+---
+
 ## UI Polish — Visual Hierarchy & Authenticity (2026)
 
 A targeted pass to reduce the generic "AI-generated" feel of the UI without changing app structure or functionality. Every change is grounded in a specific diagnosis.
