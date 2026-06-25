@@ -1,15 +1,22 @@
-# StudiujWŁodzi
+<h1 align="center">StudiujWŁodzi</h1>
+<p align="center">
+  <img src="https://img.shields.io/badge/React_Native-0.79-61DAFB?logo=react&logoColor=white" alt="React Native">
+  <img src="https://img.shields.io/badge/Expo-SDK_54-000020?logo=expo&logoColor=white" alt="Expo SDK 54">
+  <img src="https://img.shields.io/badge/TypeScript-strict-3178C6?logo=typescript&logoColor=white" alt="TypeScript">
+  <img src="https://img.shields.io/badge/platform-iOS_%7C_Android_%7C_Web-lightgrey" alt="Platform">
+  <img src="https://img.shields.io/badge/version-1.0.0-orange" alt="Version">
+  <img src="https://img.shields.io/badge/license-MIT-blue" alt="License MIT">
+</p>
+<p align="center">
+  A cross-platform mobile app that aggregates university information, a city guide, scholarships, student discounts, and a cost-of-living calculator into a single offline-friendly experience for students in Łódź, Poland.
+</p>
 
-A mobile app for students in Łódź, Poland. It aggregates university information, a city guide, scholarships, student discounts, and a cost-of-living calculator into one place.
-
-![Platform](https://img.shields.io/badge/platform-iOS%20%7C%20Android%20%7C%20Web-blue)
-![Expo SDK](https://img.shields.io/badge/Expo%20SDK-54-blue)
-![Version](https://img.shields.io/badge/version-1.0.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
+---
 
 ## Table of Contents
 
 - [About](#about)
+- [Recognition](#recognition)
 - [Features](#features)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
@@ -33,6 +40,19 @@ Students moving to Łódź face fragmented information — universities, discoun
 
 ---
 
+## Recognition
+
+**Finalist — TOP 3 · APPetyt na studiowanie w Łodzi** · November 2025  
+*Organized by Uniwersytet Łódzki during Łódź IT Days at the Faculty of Mathematics and Computer Science*
+
+Secured a finalist spot (Top 3 out of 13 competing teams) in a software development hackathon focused on promoting academic opportunities in Łódź. Responsibilities during the competition:
+
+- Architected and built the mobile client application from scratch using React Native and Expo
+- Designed a fluid user interface utilizing advanced navigation patterns and performance-optimized animations (Reanimated)
+- Defended the technical architecture and product design during the final evaluation round before the university committee
+
+---
+
 ## Features
 
 | Screen | Description |
@@ -40,7 +60,7 @@ Students moving to Łódź face fragmented information — universities, discoun
 | **Home** | Animated navigation hub with quick-access cards |
 | **University Guide** | Searchable list of Łódź universities with field-of-study details; filterable by type; tap any entry for a full detail modal |
 | **About Łódź** | City overview — attractions, student life highlights, neighborhoods guide, and a campus map |
-| **Campus Map** | Inline map preview (CARTO tiles via Leaflet) with a "Otwórz mapę" button that opens a full-screen interactive modal |
+| **Campus Map** | Inline map preview (CARTO tiles via Leaflet) with a button that opens a full-screen interactive modal |
 | **Scholarships & Student Life** | National scholarship types with amounts, gov.pl deep-links, and everyday student life tips |
 | **Cost of Living Calculator** | Adjustable sliders across four categories; live pie chart and total; reset to defaults |
 | **Student Discounts** | Categorized database of discount partners (Karta Łodzianina / Młodzi w Łodzi); tap a category to filter |
@@ -98,7 +118,6 @@ StudiujWLodzi/
 │   ├── content-container.tsx     # Max-width centering wrapper (900 px cap) for tablet layouts
 │   ├── external-link.tsx
 │   ├── haptic-tab.tsx
-│   ├── hello-wave.tsx
 │   ├── parallax-scroll-view.tsx
 │   ├── presentation-hero.tsx
 │   ├── read-more.tsx             # Expandable text — "Czytaj więcej / mniej"
@@ -131,24 +150,24 @@ StudiujWLodzi/
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) LTS (v20 or later)
-- [npm](https://www.npmjs.com/) (bundled with Node.js)
-- [Expo Go](https://expo.dev/go) on a physical iOS or Android device — **or** a local simulator/emulator
+- [Expo Go](https://expo.dev/go) on a physical iOS or Android device — or a local simulator/emulator
 
 For native builds:
+
 - iOS: [Xcode](https://developer.apple.com/xcode/) 15+ (macOS only)
 - Android: [Android Studio](https://developer.android.com/studio) with SDK 34+
 
 ### Installation
 
-```sh
+```bash
 git clone https://github.com/konradxmalinowski/StudiujWLodzi.git
 cd StudiujWLodzi
 npm install
 ```
 
-### Running the App
+### Running the app
 
-```sh
+```bash
 npm start
 ```
 
@@ -180,16 +199,16 @@ Expo developer tools will open in your browser. Then press a key to launch:
 
 ## Data Sources
 
-All content is currently static and bundled with the app. See [docs/DATA_SOURCES.md](docs/DATA_SOURCES.md) for a full breakdown of every dataset: origin, known limitations, authoritative sources, and recommended update cadence.
+All content is currently static and bundled with the app. See [`docs/DATA_SOURCES.md`](docs/DATA_SOURCES.md) for a full breakdown of every dataset: origin, known limitations, authoritative sources, and recommended update cadence.
 
 ---
 
 ## Contributing
 
-Contributions are welcome. Please read [docs/CONTRIBUTING.md](docs/CONTRIBUTING.md) before opening a pull request.
+Contributions are welcome. Please read [`docs/CONTRIBUTING.md`](docs/CONTRIBUTING.md) before opening a pull request.
 
 ---
 
 ## License
 
-MIT — see [LICENSE](LICENSE) for details.
+MIT — see [`LICENSE`](LICENSE) for details.
