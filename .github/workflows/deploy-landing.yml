@@ -18,6 +18,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate HTML
+        run: npx --yes html-validate website/*.html
+
+      - name: Check internal anchor links resolve
+        run: |
+          for f in website/*.html; do
+            for anchor in $(grep -oE 'href="#[a-zA-Z0-9_-]+"' "$f" | sed -E 's/href="#(.*)"/\1/'); do
+              if ! grep -qE "id=\"$anchor\"" "$f"; then
+                echo "Broken anchor #$anchor in $f"
+                exit 1
+              fi
+            done
+          done
+
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:

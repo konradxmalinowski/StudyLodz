@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://konradxmalinowski.github.io/StudyLodz/sitemap.xml
