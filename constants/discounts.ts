@@ -1,11 +1,3 @@
-export type DiscountPartner = {
-  name: string;
-  category: string;
-  discount: string;
-  address?: string;
-  url?: string;
-};
-
 export const DISCOUNT_CATEGORIES = [
   { name: 'Transport publiczny', icon: 'bus.fill' },
   { name: 'Kultura i sztuka', icon: 'theatermasks.fill' },
@@ -13,7 +5,17 @@ export const DISCOUNT_CATEGORIES = [
   { name: 'Gastronomia', icon: 'fork.knife' },
   { name: 'Edukacja i rozwój', icon: 'book.fill' },
   { name: 'Zdrowie i uroda', icon: 'heart.fill' },
-];
+] as const;
+
+export type DiscountCategoryName = (typeof DISCOUNT_CATEGORIES)[number]['name'];
+
+export type DiscountPartner = {
+  name: string;
+  category: DiscountCategoryName;
+  discount: string;
+  address?: string;
+  url?: string;
+};
 
 export const DISCOUNT_PARTNERS: DiscountPartner[] = [
   // Transport publiczny
