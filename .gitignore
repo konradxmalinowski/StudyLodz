@@ -36,6 +36,9 @@ yarn-error.*
 # typescript
 *.tsbuildinfo
 
+# husky (generated internals, not the hooks themselves)
+.husky/_
+
 app-example
 
 # generated native folders
