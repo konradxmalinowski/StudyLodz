@@ -55,6 +55,8 @@ export default function DiscountsScreen() {
             <Pressable
               style={[styles.button, { backgroundColor: tintColor }]}
               onPress={() => openLink('https://kartalodzianina.pl/')}
+              accessibilityRole="link"
+              accessibilityLabel="Odwiedź stronę Karty Łodzianina"
             >
               <MaterialCommunityIcons name="web" size={20} color="#fff" />
               <ThemedText style={styles.buttonText}>Odwiedź stronę Karty Łodzianina</ThemedText>
@@ -73,6 +75,9 @@ export default function DiscountsScreen() {
                   <Pressable
                     key={category.name}
                     onPress={() => toggleCategory(category.name)}
+                    accessibilityRole="button"
+                    accessibilityLabel={`Filtruj: ${category.name}`}
+                    accessibilityState={{ selected: active }}
                     style={[
                       styles.chip,
                       active
@@ -108,6 +113,8 @@ export default function DiscountsScreen() {
                 <Pressable
                   key={partner.name}
                   onPress={partner.url ? () => openLink(partner.url!) : undefined}
+                  accessibilityRole={partner.url ? 'link' : undefined}
+                  accessibilityLabel={`${partner.name}: ${partner.discount}`}
                   style={({ pressed }) => [styles.partnerCardWrapper, isTablet && styles.partnerCardTablet, pressed && { opacity: 0.7 }]}
                 >
                   <ThemedView style={styles.partnerCard} lightColor="#f5f5f7" darkColor="#2c2c2e">

@@ -76,21 +76,36 @@ export default function StudyScreen() {
                 value={searchQuery}
                 onChangeText={setSearchQuery}
                 placeholderTextColor={colorScheme === 'dark' ? '#666' : '#999'}
+                accessibilityLabel="Szukaj uczelni"
+                accessibilityRole="search"
               />
             </View>
             <View style={styles.filterContainer}>
               <View style={styles.switchContainer}>
                 <ThemedText>Publiczne</ThemedText>
-                <CustomCheckbox value={showPublic} onValueChange={(value) => handleCheckboxChange(setShowPublic, value)} />
+                <CustomCheckbox
+                  value={showPublic}
+                  onValueChange={(value) => handleCheckboxChange(setShowPublic, value)}
+                  accessibilityLabel="Pokaż uczelnie publiczne"
+                />
               </View>
               <View style={styles.switchContainer}>
                 <ThemedText>Artystyczne</ThemedText>
-                <CustomCheckbox value={showArtistic} onValueChange={(value) => handleCheckboxChange(setShowArtistic, value)} />
+                <CustomCheckbox
+                  value={showArtistic}
+                  onValueChange={(value) => handleCheckboxChange(setShowArtistic, value)}
+                  accessibilityLabel="Pokaż uczelnie artystyczne"
+                />
               </View>
             </View>
             <View style={[styles.universityList, isTablet && styles.universityListTablet]}>
               {filteredUniversities.map((uni) => (
-                <Pressable key={uni.title} onPress={() => handlePress(uni)} style={isTablet && styles.universityCardTablet}>
+                <Pressable
+                  key={uni.title}
+                  onPress={() => handlePress(uni)}
+                  style={isTablet && styles.universityCardTablet}
+                  accessibilityRole="button"
+                  accessibilityLabel={`${uni.title}, ${uni.type === 'artystyczna' ? 'uczelnia artystyczna' : 'uczelnia publiczna'}`}>
                   <ThemedView style={styles.universityCard} lightColor="#f9f9f9" darkColor="#1c1c1e">
                     <View style={styles.universityInfo}>
                       <View style={styles.universityTitleRow}>

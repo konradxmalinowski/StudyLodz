@@ -143,8 +143,12 @@ export default function LodzScreen() {
     <SafeAreaView style={{ flex: 1 }}>
       <ScrollView contentContainerStyle={styles.scroll}>
         <ScrollView horizontal showsHorizontalScrollIndicator={false} contentContainerStyle={[styles.gallery, { paddingHorizontal: padding }]}>
-          {(['lodz1.jpg', 'lodz2.jpg', 'lodz3.png', 'lodz4.png', 'lodz5.png'] as const).map((name) => (
-            <Pressable key={name} onPress={() => router.push({ pathname: '/modal', params: { image: name } })}>
+          {(['lodz1.jpg', 'lodz2.jpg', 'lodz3.png', 'lodz4.png', 'lodz5.png'] as const).map((name, index) => (
+            <Pressable
+              key={name}
+              onPress={() => router.push({ pathname: '/modal', params: { image: name } })}
+              accessibilityRole="imagebutton"
+              accessibilityLabel={`Zdjęcie Łodzi ${index + 1} z 5, dotknij aby powiększyć`}>
               <AnimatedImage
                 source={
                   name === 'lodz1.jpg' ? require('@/assets/images/lodz1_jpg.jpg') :
@@ -256,7 +260,10 @@ export default function LodzScreen() {
           <AnimatedCard key={section.title} delay={400 + index * 100}>
             <ThemedView style={styles.card} lightColor="#f9f9f9" darkColor="#1c1c1e">
               <View style={styles.cardHeader}>
-                <Pressable onPress={() => router.push({ pathname: '/modal', params: { image: section.imageName } })}>
+                <Pressable
+                  onPress={() => router.push({ pathname: '/modal', params: { image: section.imageName } })}
+                  accessibilityRole="imagebutton"
+                  accessibilityLabel={`Zdjęcie: ${section.title}, dotknij aby powiększyć`}>
                   <Image source={section.image} style={styles.cardImage} />
                 </Pressable>
                 <ThemedText type="subtitle" style={{ flexShrink: 1 }}>{section.title}</ThemedText>

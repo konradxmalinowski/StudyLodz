@@ -43,7 +43,15 @@ export function CustomSwitch({ value, onValueChange }: { value: boolean; onValue
   );
 }
 
-export function CustomCheckbox({ value, onValueChange }: { value: boolean; onValueChange: (value: boolean) => void }) {
+export function CustomCheckbox({
+  value,
+  onValueChange,
+  accessibilityLabel,
+}: {
+  value: boolean;
+  onValueChange: (value: boolean) => void;
+  accessibilityLabel?: string;
+}) {
   const checkboxBackgroundColor = useThemeColor({ light: '#FFFFFF', dark: '#39393D' }, 'background');
   const checkboxBorderColor = useThemeColor({ light: '#E9E9EA', dark: '#555' }, 'background');
   const checkedColor = useThemeColor({}, 'tint');
@@ -52,6 +60,9 @@ export function CustomCheckbox({ value, onValueChange }: { value: boolean; onVal
   return (
     <Pressable
       onPress={() => onValueChange(!value)}
+      accessibilityRole="checkbox"
+      accessibilityState={{ checked: value }}
+      accessibilityLabel={accessibilityLabel}
       style={[
         styles.checkboxBase,
         {

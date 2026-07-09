@@ -84,8 +84,12 @@ export default function ModalScreen() {
       );
     }
     return (
-      <Pressable style={styles.modalContainer} onPress={() => router.back()}>
-        <Image source={imageSource} style={styles.modalImage} />
+      <Pressable
+        style={styles.modalContainer}
+        onPress={() => router.back()}
+        accessibilityRole="button"
+        accessibilityLabel="Zdjęcie w pełnym rozmiarze, dotknij aby zamknąć">
+        <Image source={imageSource} style={styles.modalImage} accessibilityLabel="Zdjęcie Łodzi" />
       </Pressable>
     );
   }

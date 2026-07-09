@@ -60,6 +60,8 @@ export function StudyMap() {
       <Pressable
         style={styles.overlay}
         onPress={() => router.push({ pathname: '/modal', params: { map: 'campuses' } })}
+        accessibilityRole="button"
+        accessibilityLabel="Otwórz interaktywną mapę kampusów"
       >
         <View style={[styles.openButton, { backgroundColor: tintColor }]}>
           <MaterialCommunityIcons name="map-search" size={18} color="#fff" />
