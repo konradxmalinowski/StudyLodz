@@ -89,4 +89,20 @@ https://expo.dev/accounts/konradxmalinowski/projects/StudiujWLodzi/builds
 
 ## CI/CD
 
-There is no CI/CD pipeline configured. Builds are triggered manually via the EAS CLI.
+`.github/workflows/ci.yml` runs lint, typecheck, and the Jest test suite on every push/PR to `main`. It does not build or submit the app — native builds are still triggered manually via the EAS CLI.
+
+`.github/workflows/deploy-landing.yml` validates and deploys the marketing site in `website/` to the `gh-pages` branch whenever `website/**` changes on `main`.
+
+## Rolling Back
+
+**Website (`website/`):** deploys are just a git-tracked static site — revert the offending commit and push; `deploy-landing.yml` redeploys automatically:
+```sh
+git revert <bad-commit-sha>
+git push
+```
+
+**Mobile app:** native releases can't be rolled back the way a web deploy can — once a build is live in the App Store / Google Play, the only options are:
+- Submit a new build with the fix and request **expedited review** (Apple typically approves expedited requests within 24-48h for clear regressions)
+- If the issue is severe enough to warrant pulling the app, temporarily unpublish it from App Store Connect / Play Console while the fix is prepared
+
+There is currently no remote feature-flag/kill-switch mechanism in the app (out of scope at this project's size — see CLAUDE.md's "no global state management" convention), so a broken native release cannot be mitigated without shipping a new build.

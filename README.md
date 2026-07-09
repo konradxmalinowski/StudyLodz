@@ -150,10 +150,7 @@ StudiujWLodzi/
 ### Prerequisites
 
 - [Node.js](https://nodejs.org/) LTS (v20 or later)
-- [Expo Go](https://expo.dev/go) on a physical iOS or Android device — or a local simulator/emulator
-
-For native builds:
-
+- A [development build](https://docs.expo.dev/develop/development-builds/introduction/) or a local simulator/emulator — this project uses `react-native-worklets` and `react-native-webview`, which require native modules and **do not run in plain Expo Go**
 - iOS: [Xcode](https://developer.apple.com/xcode/) 15+ (macOS only)
 - Android: [Android Studio](https://developer.android.com/studio) with SDK 34+
 
@@ -178,9 +175,7 @@ Expo developer tools will open in your browser. Then press a key to launch:
 | `i` | iOS simulator (macOS only) |
 | `a` | Android emulator |
 | `w` | Web browser |
-| Scan QR | Expo Go on a physical device |
-
-> **Note:** This project uses `react-native-worklets` and `react-native-webview`, which require a [development build](https://docs.expo.dev/develop/development-builds/introduction/) or native simulator — they do not run in Expo Go.
+| Scan QR | A development build installed on a physical device (not Expo Go — see Prerequisites above) |
 
 ---
 
