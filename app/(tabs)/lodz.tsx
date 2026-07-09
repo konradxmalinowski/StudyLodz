@@ -104,19 +104,19 @@ const NEIGHBORHOODS = [
 const SECTIONS = [
     {
       title: 'UNESCO Miasto Filmu',
-      image: require('@/assets/images/lodz1_png.png'),
+      image: require('@/assets/images/lodz1_png.jpg'),
       imageName: 'lodz1.png',
       content: 'Znana na świecie dzięki prestiżowej Szkole Filmowej, która wykształciła laureatów Oscara, takich jak Roman Polański i Andrzej Wajda.',
     },
     {
       title: 'Akademickie Serce Polski',
-      image: require('@/assets/images/lodz2_png.png'),
+      image: require('@/assets/images/lodz2_png.jpg'),
       imageName: 'lodz2.png',
       content: 'Łódź to jeden z najważniejszych ośrodków akademickich w kraju, oferujący szeroki wachlarz możliwości edukacyjnych.',
     },
     {
       title: 'Praca i Rozwój Kariery: Łódź jako Biznesowy Hub',
-      image: require('@/assets/images/lodz3_png.png'),
+      image: require('@/assets/images/lodz3_png.jpg'),
       imageName: 'lodz3.png',
       content: 'Prawie 100 centrów SSC i dynamiczny rozwój sektorów IT, logistyki oraz obsługi klienta (BPO/IT) czynią Łódź atrakcyjnym rynkiem pracy.',
     },
@@ -153,9 +153,9 @@ export default function LodzScreen() {
                 source={
                   name === 'lodz1.jpg' ? require('@/assets/images/lodz1_jpg.jpg') :
                   name === 'lodz2.jpg' ? require('@/assets/images/lodz2_jpg.jpg') :
-                  name === 'lodz3.png' ? require('@/assets/images/lodz3_png.png') :
-                  name === 'lodz4.png' ? require('@/assets/images/lodz4_png.png') :
-                  require('@/assets/images/lodz5.png')
+                  name === 'lodz3.png' ? require('@/assets/images/lodz3_png.jpg') :
+                  name === 'lodz4.png' ? require('@/assets/images/lodz4_png.jpg') :
+                  require('@/assets/images/lodz5.jpg')
                 }
                 style={[styles.image, isTablet && styles.imageTablet, { opacity: imageOpacity }]}
               />

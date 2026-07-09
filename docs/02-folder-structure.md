@@ -24,13 +24,13 @@ StudiujWLodzi/
 │       ├── favicon.png           # Web favicon
 │       ├── image.jpg             # Home screen parallax hero image
 │       ├── android-icon-*.png    # Adaptive icon layers (foreground, background, monochrome)
-│       ├── lodz1_jpg.jpg         # City photo gallery images
+│       ├── lodz1_jpg.jpg         # City photo gallery images (all re-encoded as optimized JPEG)
 │       ├── lodz2_jpg.jpg
-│       ├── lodz1_png.png
-│       ├── lodz2_png.png
-│       ├── lodz3_png.png
-│       ├── lodz4_png.png
-│       └── lodz5.png
+│       ├── lodz1_png.jpg
+│       ├── lodz2_png.jpg
+│       ├── lodz3_png.jpg
+│       ├── lodz4_png.jpg
+│       └── lodz5.jpg
 │
 ├── components/                   # Shared, reusable UI components
 │   ├── animated-card.tsx         # Fade+slide entrance animation wrapper; optional press-scale

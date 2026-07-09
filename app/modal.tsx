@@ -46,11 +46,11 @@ const CAMPUSES_MAP_HTML = `<!DOCTYPE html>
 const IMAGE_SOURCES: { [key: string]: any } = {
   'lodz1.jpg': require('@/assets/images/lodz1_jpg.jpg'),
   'lodz2.jpg': require('@/assets/images/lodz2_jpg.jpg'),
-  'lodz3.png': require('@/assets/images/lodz3_png.png'),
-  'lodz1.png': require('@/assets/images/lodz1_png.png'),
-  'lodz2.png': require('@/assets/images/lodz2_png.png'),
-  'lodz4.png': require('@/assets/images/lodz4_png.png'),
-  'lodz5.png': require('@/assets/images/lodz5.png'),
+  'lodz3.png': require('@/assets/images/lodz3_png.jpg'),
+  'lodz1.png': require('@/assets/images/lodz1_png.jpg'),
+  'lodz2.png': require('@/assets/images/lodz2_png.jpg'),
+  'lodz4.png': require('@/assets/images/lodz4_png.jpg'),
+  'lodz5.png': require('@/assets/images/lodz5.jpg'),
 };
 
 export default function ModalScreen() {

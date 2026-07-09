@@ -90,11 +90,13 @@ Images used in the app:
 | `image.jpg` | Home screen parallax header; `PresentationHero` |
 | `lodz1_jpg.jpg` | Lodz gallery + SECTIONS card |
 | `lodz2_jpg.jpg` | Lodz gallery |
-| `lodz1_png.png` | Lodz gallery + SECTIONS card |
-| `lodz2_png.png` | Lodz gallery + SECTIONS card |
-| `lodz3_png.png` | Lodz gallery + SECTIONS card |
-| `lodz4_png.png` | Lodz gallery |
-| `lodz5.png` | Lodz gallery |
+| `lodz1_png.jpg` | Lodz gallery + SECTIONS card |
+| `lodz2_png.jpg` | Lodz gallery + SECTIONS card |
+| `lodz3_png.jpg` | Lodz gallery + SECTIONS card |
+| `lodz4_png.jpg` | Lodz gallery |
+| `lodz5.jpg` | Lodz gallery |
+
+All city gallery photos are stored as optimized JPEG (re-encoded from the original PNG exports to cut install size — see `docs/CHANGELOG.md`); filenames keep their historical `_png`/`_jpg` suffixes as identifiers even though every file is now JPEG-encoded.
 
 All city images are referenced both from `lodz.tsx` (inline `require` statements) and from a key-based map in `modal.tsx` (`IMAGE_SOURCES`) for the full-screen viewer. When adding a new image, both locations must be updated.
 
