@@ -150,6 +150,26 @@ h2 {
   transform-origin: left;
 }
 
+.lang-toggle {
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--tint);
+  background: color-mix(in srgb, var(--tint) 12%, transparent);
+  border: 1px solid color-mix(in srgb, var(--tint) 30%, transparent);
+  border-radius: 20px;
+  padding: 6px 14px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.lang-toggle:hover,
+.lang-toggle:focus-visible {
+  background: var(--tint);
+  color: #fff;
+}
+
 /* Hero */
 .hero {
   padding: 56px 0 64px;

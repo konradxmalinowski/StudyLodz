@@ -9,8 +9,9 @@
   <link rel="canonical" href="https://konradxmalinowski.github.io/StudyLodz/privacy.html" />
   <link rel="icon" href="assets/favicon.png" />
   <link rel="stylesheet" href="styles.css" />
+  <script src="i18n.js" defer></script>
 </head>
-<body>
+<body data-page="privacy">
 
   <header class="site-header">
     <div class="wrap site-header__inner">
@@ -19,8 +20,9 @@
         <span>StudiujWŁodzi</span>
       </a>
       <nav class="site-nav" aria-label="Nawigacja">
-        <a href="index.html">Strona główna</a>
-        <a href="https://github.com/konradxmalinowski/StudyLodz" target="_blank" rel="noopener">Kod źródłowy</a>
+        <a href="index.html" data-i18n="nav_home">Strona główna</a>
+        <a href="https://github.com/konradxmalinowski/StudyLodz" target="_blank" rel="noopener" data-i18n="nav_source">Kod źródłowy</a>
+        <button type="button" class="lang-toggle" aria-label="Switch to English">EN</button>
       </nav>
     </div>
   </header>
@@ -28,31 +30,34 @@
   <main>
     <section class="problem">
       <div class="wrap problem__inner policy">
-        <p class="eyebrow">Ostatnia aktualizacja: lipiec 2026</p>
-        <h1>Polityka prywatności</h1>
-        <p>
+        <p class="eyebrow" data-i18n="privacy_updated">Ostatnia aktualizacja: lipiec 2026</p>
+        <h1 data-i18n="privacy_h1">Polityka prywatności</h1>
+        <p data-i18n="privacy_intro">
           StudiujWŁodzi jest aplikacją bez konta, bez logowania i bez serwera — wszystkie treści
           (uczelnie, zniżki, stypendia, opis miasta) są wbudowane w aplikację i nie wymagają
           połączenia z internetem. Poniżej opisujemy dokładnie, jakie dane są przetwarzane.
         </p>
 
-        <h2>Jakie dane zbieramy</h2>
-        <p>
+        <h2 data-i18n="privacy_s1_title">Jakie dane zbieramy</h2>
+        <p data-i18n="privacy_s1_body">
           Żadne. Aplikacja nie wymaga rejestracji ani logowania, nie zbiera danych osobowych,
           nie zawiera analityki ani śledzenia zachowań użytkownika i nie wysyła żadnych danych na
           żaden serwer należący do twórcy aplikacji.
         </p>
 
-        <h2>Dane przechowywane lokalnie na urządzeniu</h2>
-        <p>
+        <h2 data-i18n="privacy_s2_title">Dane przechowywane lokalnie na urządzeniu</h2>
+        <p data-i18n="privacy_s2_body">
           Jedyną informacją zapisywaną lokalnie jest wybrany motyw kolorystyczny (jasny / ciemny),
           przechowywany w pamięci urządzenia (AsyncStorage na iOS/Android, localStorage w wersji
           web) pod kluczem <code>APP_COLOR_SCHEME_OVERRIDE</code>. Ta wartość nigdy nie opuszcza
-          urządzenia i nie jest w żaden sposób powiązana z tożsamością użytkownika.
+          urządzenia i nie jest w żaden sposób powiązana z tożsamością użytkownika. Ta strona
+          internetowa (ta, którą teraz czytasz) osobno zapamiętuje wybrany język interfejsu w
+          pamięci przeglądarki (localStorage) pod kluczem <code>site_lang</code> — ta wartość
+          również nigdy nie opuszcza przeglądarki.
         </p>
 
-        <h2>Połączenia z usługami zewnętrznymi</h2>
-        <p>
+        <h2 data-i18n="privacy_s3_title">Połączenia z usługami zewnętrznymi</h2>
+        <p data-i18n="privacy_s3_body">
           Aplikacja łączy się z internetem tylko w jednym przypadku: gdy użytkownik otworzy
           interaktywną mapę kampusów. Wtedy pobierane są kafelki mapy z serwera CARTO
           (<code>basemaps.cartocdn.com</code>) oraz biblioteka Leaflet.js z <code>unpkg.com</code>.
@@ -61,29 +66,29 @@
           im żadnych dodatkowych informacji o użytkowniku.
         </p>
 
-        <h2>Linki zewnętrzne</h2>
-        <p>
+        <h2 data-i18n="privacy_s4_title">Linki zewnętrzne</h2>
+        <p data-i18n="privacy_s4_body">
           Ekrany stypendiów i zniżek zawierają odnośniki do stron zewnętrznych (np. gov.pl,
           kartalodzianina.pl, strony uczelni i partnerów zniżkowych). Po opuszczeniu aplikacji te
           strony podlegają własnym politykom prywatności, niezależnym od StudiujWŁodzi.
         </p>
 
-        <h2>Prawa użytkownika</h2>
-        <p>
+        <h2 data-i18n="privacy_s5_title">Prawa użytkownika</h2>
+        <p data-i18n="privacy_s5_body">
           Ponieważ aplikacja nie zbiera ani nie przechowuje żadnych danych osobowych poza
           urządzeniem użytkownika, nie ma potrzeby składania wniosków o dostęp, poprawę czy
           usunięcie danych — nic takiego nie jest nigdzie przechowywane. Usunięcie aplikacji
           usuwa również lokalnie zapisaną preferencję motywu.
         </p>
 
-        <h2>Zmiany w polityce prywatności</h2>
-        <p>
+        <h2 data-i18n="privacy_s6_title">Zmiany w polityce prywatności</h2>
+        <p data-i18n="privacy_s6_body">
           Jeśli w przyszłości aplikacja zacznie przetwarzać dodatkowe dane (np. w wyniku nowej
           funkcji), ta strona zostanie odpowiednio zaktualizowana przed wydaniem takiej zmiany.
         </p>
 
-        <h2>Kontakt</h2>
-        <p>
+        <h2 data-i18n="privacy_s7_title">Kontakt</h2>
+        <p data-i18n="privacy_s7_body">
           Pytania dotyczące prywatności można kierować przez
           <a href="https://github.com/konradxmalinowski/StudyLodz/issues" target="_blank" rel="noopener">zgłoszenie na GitHubie</a>.
         </p>
@@ -93,8 +98,8 @@
 
   <footer class="site-footer">
     <div class="wrap site-footer__inner">
-      <p>StudiujWŁodzi — Konrad Malinowski</p>
-      <p><a href="https://github.com/konradxmalinowski/StudyLodz" target="_blank" rel="noopener">GitHub</a> · Licencja MIT</p>
+      <p data-i18n="footer_tagline">StudiujWŁodzi — Konrad Malinowski</p>
+      <p><a href="https://github.com/konradxmalinowski/StudyLodz" target="_blank" rel="noopener">GitHub</a> · <span data-i18n="footer_license">Licencja MIT</span></p>
     </div>
   </footer>
 
