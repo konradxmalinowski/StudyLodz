@@ -21,7 +21,7 @@ export async function loadOverride() {
 export async function setColorSchemeOverride(value: ColorSchemeName | 'system' | null) {
     _override = value === 'system' ? null : value;
     try {
-        if (value === 'system' || value === null) {
+        if (value === 'system' || value == null) {
             await AsyncStorage.removeItem(STORAGE_KEY);
         } else {
             await AsyncStorage.setItem(STORAGE_KEY, value);

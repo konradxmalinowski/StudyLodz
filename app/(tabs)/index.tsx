@@ -1,5 +1,5 @@
 import { Image, Pressable, StyleSheet, View } from 'react-native';
-import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
+import Animated, { Easing, interpolate, useAnimatedStyle, useSharedValue, withDelay, withTiming } from 'react-native-reanimated';
 
 import { AnimatedCard } from '@/components/animated-card';
 import { HelloWave } from '@/components/hello-wave';
@@ -10,7 +10,7 @@ import { IconSymbol } from '@/components/ui/icon-symbol';
 import { useResponsive } from '@/hooks/use-responsive';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import * as Haptics from 'expo-haptics';
-import { useRouter } from 'expo-router';
+import { useRouter, type Href } from 'expo-router';
 import { useEffect } from 'react';
 
 const AnimatedImage = Animated.createAnimatedComponent(Image);
@@ -20,7 +20,7 @@ const SECTIONS = [
   {
     title: 'Przewodnik po studiach',
     description: 'Odkryj, dlaczego Łódź to idealne miejsce do nauki, życia i rozwoju. Przejdź do przewodnika, aby dowiedzieć się więcej.',
-    link: '/study',
+    link: '/study' as Href,
     buttonText: 'Otwórz przewodnik',
     icon: 'book.fill',
     accentColor: '#4E56C0',
@@ -28,7 +28,7 @@ const SECTIONS = [
   {
     title: 'Odkryj Łódź',
     description: 'Poznaj historię, kulturę i najciekawsze miejsca w Łodzi. Zobacz, co sprawia, że to miasto jest wyjątkowe.',
-    link: '/lodz',
+    link: '/lodz' as Href,
     buttonText: 'Poznaj miasto',
     icon: 'building.2.fill',
     accentColor: '#2E8B57',
@@ -43,10 +43,10 @@ export default function HomeScreen() {
 
   useEffect(() => {
     imageOpacity.value = withTiming(1, { duration: 800, easing: Easing.inOut(Easing.ease) });
-    titleTranslateY.value = withTiming(0, { duration: 600, easing: Easing.out(Easing.ease), delay: 200 });
+    titleTranslateY.value = withDelay(200, withTiming(0, { duration: 600, easing: Easing.out(Easing.ease) }));
   }, [imageOpacity, titleTranslateY]);
 
-  const handlePress = (href: string) => {
+  const handlePress = (href: Href) => {
     Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Medium);
     router.push(href);
   };
