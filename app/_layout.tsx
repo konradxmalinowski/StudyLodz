@@ -6,6 +6,7 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useCallback, useEffect, useState } from 'react';
 import { Pressable, View } from 'react-native';
 
+import { ErrorBoundary } from '@/components/error-boundary';
 import { IconSymbol } from '@/components/ui/icon-symbol';
 import { Colors } from '@/constants/theme';
 import { loadOverride, useColorScheme } from '@/hooks/use-color-scheme';
@@ -58,26 +59,31 @@ export default function RootLayout() {
   return (
     <View style={{ flex: 1, backgroundColor }} onLayout={onLayoutRootView}>
       <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-        <Stack screenOptions={{ animation: 'fade' }}>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen
-            name="modal"
-            options={{
-              presentation: 'modal',
-              title: 'Kierunki Studiów',
-              headerRight: () => (
-                <Pressable onPress={() => router.back()}>
-                  <IconSymbol
-                    name="xmark"
-                    size={28}
-                    color={Colors[colorScheme ?? 'light'].text}
-                    style={{ opacity: 0.7, padding: 8 }}
-                  />
-                </Pressable>
-              ),
-            }}
-          />
-        </Stack>
+        <ErrorBoundary>
+          <Stack screenOptions={{ animation: 'fade' }}>
+            <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+            <Stack.Screen
+              name="modal"
+              options={{
+                presentation: 'modal',
+                title: 'Kierunki Studiów',
+                headerRight: () => (
+                  <Pressable
+                    onPress={() => router.back()}
+                    accessibilityRole="button"
+                    accessibilityLabel="Zamknij">
+                    <IconSymbol
+                      name="xmark"
+                      size={28}
+                      color={Colors[colorScheme ?? 'light'].text}
+                      style={{ opacity: 0.7, padding: 8 }}
+                    />
+                  </Pressable>
+                ),
+              }}
+            />
+          </Stack>
+        </ErrorBoundary>
         <StatusBar style="auto" />
       </ThemeProvider>
     </View>
